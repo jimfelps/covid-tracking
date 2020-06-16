@@ -5,8 +5,11 @@ library(tidyverse)
 library(lubridate)
 library(janitor)
 library(tidyquant)
+library(hrbrthemes)
+library(viridis)
+library(paletteer)
 
-theme_set(theme_light())
+theme_set(theme_ipsum())
 
 resp <- GET("https://covidtracking.com/api/v1/states/daily.csv")
 http_type(resp)
