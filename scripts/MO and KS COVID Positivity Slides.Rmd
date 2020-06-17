@@ -36,6 +36,8 @@ state_data %>%
       subtitle = "Reporting Notes: https://covidtracking.com/data/state/missouri",
       caption = "Data from COVID Tracking project\nhttps://covidtracking.com/"
         ) 
+
+ggsave("images/missouri.png")
 ```
 
 ## Kansas
