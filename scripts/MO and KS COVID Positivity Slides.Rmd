@@ -33,7 +33,7 @@ state_data %>%
       x = "",
       y = "",
       title = "COVID Testing Positivity, 7 Day Moving Average",
-      subtitle = "Reporting Notes: https://covidtracking.com/data/state/missouri",
+      subtitle = "",
       caption = "Data from COVID Tracking project\nhttps://covidtracking.com/"
         ) 
 
@@ -52,9 +52,11 @@ state_data %>%
       x = "",
       y = "",
       title = "COVID Testing Positivity, 7 Day Moving Average",
-      subtitle = "Reporting Notes: https://covidtracking.com/data/state/kansas",
+      subtitle = "",
       caption = "Data from COVID Tracking project\nhttps://covidtracking.com/"
         )
+
+ggsave("images/ks.png")
 ```
 
 # County-level analysis - KC Metro
@@ -70,6 +72,8 @@ metro_kc %>%
     y = "",
     caption = "Data from NYT Covid repository \nhttps://github.com/nytimes/covid-19-data"
   )
+
+ggsave("images/metro_counties.png")
 ```
 
 
@@ -87,9 +91,11 @@ state_data %>%
       x = "",
       y = "",
       title = "COVID Testing Positivity, 7 Day Moving Average",
-      subtitle = "Reporting Notes: https://covidtracking.com/data/state/arizona",
+      subtitle = "",
       caption = "Data from COVID Tracking project\nhttps://covidtracking.com/"
         )
+
+ggsave("images/az.png")
 ```
 
 ## OK
@@ -104,9 +110,11 @@ state_data %>%
       x = "",
       y = "",
       title = "COVID Testing Positivity, 7 Day Moving Average",
-      subtitle = "Reporting Notes: https://covidtracking.com/data/state/oklahoma",
+      subtitle = "",
       caption = "Data from COVID Tracking project\nhttps://covidtracking.com/"
         )
+
+ggsave("images/ok.png")
 ```
 
 ## Alabama
@@ -121,9 +129,11 @@ state_data %>%
       x = "",
       y = "",
       title = "COVID Testing Positivity, 7 Day Moving Average",
-      subtitle = "Reporting Notes: https://covidtracking.com/data/state/alabama",
+      subtitle = "",
       caption = "Data from COVID Tracking project\nhttps://covidtracking.com/"
         )
+
+ggsave("images/al.png")
 ```
 
 ## Florida
@@ -138,9 +148,11 @@ state_data %>%
       x = "",
       y = "",
       title = "COVID Testing Positivity, 7 Day Moving Average",
-      subtitle = "Florida is currently reporting both PCR and antibody testing as of 5/15. See: https://covidtracking.com/data/state/florida",
+      subtitle = "",
       caption = "Data from COVID Tracking project\nhttps://covidtracking.com/"
         )
+
+ggsave("images/fl.png")
 ```
 
 ## New York
@@ -156,8 +168,10 @@ state_data %>%
       x = "",
       y = "",
       title = "COVID Testing Positivity, 7 Day Moving Average",
-      subtitle = "I was interested in what the hardest hit state looked like",
+      subtitle = "",
       caption = "Data from COVID Tracking project\nhttps://covidtracking.com/"
         )
+
+ggsave("images/ny.png")
 ```
 
