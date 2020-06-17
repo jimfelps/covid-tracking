@@ -1,4 +1,3 @@
-library(covdata)
 
 metro_counties_mo <- c("Platte", "Clay", "Jackson", "Cass")
 metro_counties_ks <- c("Wyandotte", "Johnson")

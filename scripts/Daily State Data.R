@@ -8,6 +8,9 @@ library(tidyquant)
 library(hrbrthemes)
 library(viridis)
 library(paletteer)
+library(covdata)
+library(gghighlight)
+library(ggrepel)
 
 theme_set(theme_ipsum())
 

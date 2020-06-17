@@ -17,7 +17,8 @@ knitr::opts_chunk$set(
 
 ```{r}
 source('./scripts/Daily State Data.R')
-source('./scripts/County Level Data - Covdata.R')
+source('./scripts/KC Metro Counties - Covdata.R')
+source('./scripts/MO Counties - Covdata.R')
 
 ```
 
@@ -39,6 +40,24 @@ state_data %>%
 
 ggsave("images/missouri.png")
 ```
+
+```{r fig.height=8, fig.width=12}
+state_data %>%
+  filter(state == "MO",
+         date >= "2020-06-01") %>%
+  ggplot(aes(date, pos_rate_7dma)) +
+    geom_line(stat = "identity") +
+    labs(
+      x = "",
+      y = "",
+      title = "Missouri Positivity Rate since June 1, 7 Day Moving Average",
+      subtitle = "",
+      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/"
+        ) 
+
+ggsave("images/missouri_june.png")
+```
+
 
 ## Kansas
 
@@ -66,7 +85,7 @@ ggsave("images/ks.png")
 metro_kc %>% 
   ggplot(aes(date, new_pos_7dma, group = county, color = county)) +
   geom_line(size = 1) +
-  scale_color_ipsum() +
+  scale_color_viridis(discrete = TRUE) +
   labs(
     x = "",
     y = "",
@@ -76,6 +95,24 @@ metro_kc %>%
 ggsave("images/metro_counties.png")
 ```
 
+## All MO Counties
+
+```{r fig.height=8, fig.width=12}
+mo_counties_7ma %>% 
+  ggplot(aes(date, new_pos_7dma, group = county)) +
+  geom_line(size = 1, col = "darkred") +
+  labs(
+    x = "",
+    y = "",
+    caption = "Data from NYT Covid repository \nhttps://github.com/nytimes/covid-19-data"
+      ) +
+  gghighlight(county %in% select_counties,
+              unhighlighted_colour = alpha("steelblue", 0.4),
+              label_key = county,
+              label_params = list(size = 3))
+
+#ggsave("images/metro_counties.png")
+```
 
 # Select States with Problematic Trends \n(based on media coverage)
 
