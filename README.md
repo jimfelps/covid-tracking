@@ -18,6 +18,12 @@ This data is just positive cases since testing numbers are unavailable from the 
 
 ![KC Metro County Data](images/metro_counties.png)
 
+# All MO Counties
+
+Same as KC Metro data. This is just daily positive tests on a 7 day average. It's a bit confusing but Kansas City and St. Louis Cities have their own health departments, so positive tests in KC are not included in the counties in which the resident lives but in the KC or STL number. To make this even more confusing, there is also a St. Louis county. The red line highlighted below are for **St. Louis county** and **Kansas City**
+
+![Mo County Data](images/mo_counties.png)
+
 # Arizona
 
 Reporting Notes: https://covidtracking.com/data/state/arizona

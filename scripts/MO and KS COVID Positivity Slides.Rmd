@@ -111,7 +111,7 @@ mo_counties_7ma %>%
               label_key = county,
               label_params = list(size = 3))
 
-#ggsave("images/metro_counties.png")
+ggsave("images/mo_counties.png")
 ```
 
 # Select States with Problematic Trends \n(based on media coverage)

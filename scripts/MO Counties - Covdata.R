@@ -1,4 +1,4 @@
-select_counties <- c("St. Louis", "Kansas City", "St. Louis city", "Buchanan", "Jackson")
+select_counties <- c("St. Louis", "Kansas City")
 
 mo_counties %>% 
   filter(county != "Putnam") %>% 
