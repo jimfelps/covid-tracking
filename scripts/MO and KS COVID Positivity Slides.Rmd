@@ -89,6 +89,7 @@ metro_kc %>%
   labs(
     x = "",
     y = "",
+    title = "Daily Positive Tests, 7 day moving average",
     caption = "Data from NYT Covid repository \nhttps://github.com/nytimes/covid-19-data"
   )
 
@@ -104,6 +105,7 @@ mo_counties_7ma %>%
   labs(
     x = "",
     y = "",
+    title = "Daily Positive Tests, 7 day moving average",
     caption = "Data from NYT Covid repository \nhttps://github.com/nytimes/covid-19-data"
       ) +
   gghighlight(county %in% select_counties,
