@@ -3,8 +3,8 @@ title: "COVID-19 Positive Rates in Missouri, Kansas, and Selected States"
 author: "Jim Felps"
 date: "6/14/2020"
 output:
-  ioslides_presentation: default
   powerpoint_presentation: default
+  ioslides_presentation: default
 ---
 
 ```{r setup, include=FALSE}
@@ -24,7 +24,7 @@ source('./scripts/County Level Data - Covdata.R')
 
 ## Missouri
 
-```{r}
+```{r fig.height=8, fig.width=12}
 state_data %>%
   filter(state == "MO",
          date > "2020-03-27") %>%
@@ -33,15 +33,15 @@ state_data %>%
     labs(
       x = "",
       y = "",
-      title = "COVID Positive Tests",
-      subtitle = "7 Day Moving Average",
+      title = "COVID Testing Positivity, 7 Day Moving Average",
+      subtitle = "Reporting Notes: https://covidtracking.com/data/state/missouri",
       caption = "Data from COVID Tracking project\nhttps://covidtracking.com/"
-        )
+        ) 
 ```
 
 ## Kansas
 
-```{r}
+```{r fig.height=8, fig.width=12}
 state_data %>%
   filter(state == "KS",
          date > "2020-03-19") %>%
@@ -50,8 +50,8 @@ state_data %>%
     labs(
       x = "",
       y = "",
-      title = "COVID Positive Tests",
-      subtitle = "7 Day Moving Average",
+      title = "COVID Testing Positivity, 7 Day Moving Average",
+      subtitle = "Reporting Notes: https://covidtracking.com/data/state/kansas",
       caption = "Data from COVID Tracking project\nhttps://covidtracking.com/"
         )
 ```
@@ -59,11 +59,16 @@ state_data %>%
 # County-level analysis - KC Metro
 
 ## New Positive Cases by County
-```{r}
+```{r fig.height=8, fig.width=12}
 metro_kc %>% 
   ggplot(aes(date, new_pos_7dma, group = county, color = county)) +
   geom_line(size = 1) +
-  scale_color_ipsum()
+  scale_color_ipsum() +
+  labs(
+    x = "",
+    y = "",
+    caption = "Data from NYT Covid repository \nhttps://github.com/nytimes/covid-19-data"
+  )
 ```
 
 
@@ -71,7 +76,7 @@ metro_kc %>%
 
 ## Arizona
 
-```{r}
+```{r fig.height=8, fig.width=12}
 state_data %>%
   filter(state == "AZ",
          date > "2020-03-26") %>%
@@ -80,15 +85,32 @@ state_data %>%
     labs(
       x = "",
       y = "",
-      title = "COVID Positive Tests",
-      subtitle = "7 Day Moving Average",
+      title = "COVID Testing Positivity, 7 Day Moving Average",
+      subtitle = "Reporting Notes: https://covidtracking.com/data/state/arizona",
+      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/"
+        )
+```
+
+## OK
+
+```{r fig.height=8, fig.width=12}
+state_data %>%
+  filter(state == "OK",
+         date > "2020-04-10") %>%
+  ggplot(aes(date, pos_rate_7dma)) +
+    geom_line(stat = "identity")  +
+    labs(
+      x = "",
+      y = "",
+      title = "COVID Testing Positivity, 7 Day Moving Average",
+      subtitle = "Reporting Notes: https://covidtracking.com/data/state/oklahoma",
       caption = "Data from COVID Tracking project\nhttps://covidtracking.com/"
         )
 ```
 
 ## Alabama
 
-```{r}
+```{r fig.height=8, fig.width=12}
 state_data %>%
   filter(state == "AL",
          date > "2020-03-21") %>%
@@ -97,8 +119,25 @@ state_data %>%
     labs(
       x = "",
       y = "",
-      title = "COVID Positive Tests",
-      subtitle = "7 Day Moving Average",
+      title = "COVID Testing Positivity, 7 Day Moving Average",
+      subtitle = "Reporting Notes: https://covidtracking.com/data/state/alabama",
+      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/"
+        )
+```
+
+## Florida
+
+```{r fig.height=8, fig.width=12}
+state_data %>%
+  filter(state == "FL",
+         date > "2020-03-21") %>%
+  ggplot(aes(date, pos_rate_7dma)) +
+    geom_line(stat = "identity")  +
+    labs(
+      x = "",
+      y = "",
+      title = "COVID Testing Positivity, 7 Day Moving Average",
+      subtitle = "Florida is currently reporting both PCR and antibody testing as of 5/15. See: https://covidtracking.com/data/state/florida",
       caption = "Data from COVID Tracking project\nhttps://covidtracking.com/"
         )
 ```
@@ -106,7 +145,7 @@ state_data %>%
 ## New York
 
 
-```{r}
+```{r fig.height=8, fig.width=12}
 state_data %>%
   filter(state == "NY",
          date > "2020-03-12") %>%
@@ -115,8 +154,8 @@ state_data %>%
     labs(
       x = "",
       y = "",
-      title = "",
-      subtitle = "I was interested in what the hardest hit state looked like \n7-day moving average",
+      title = "COVID Testing Positivity, 7 Day Moving Average",
+      subtitle = "I was interested in what the hardest hit state looked like",
       caption = "Data from COVID Tracking project\nhttps://covidtracking.com/"
         )
 ```
