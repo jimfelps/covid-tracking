@@ -3,8 +3,10 @@ title: "COVID-19 Positive Rates in Missouri, Kansas, and Selected States"
 author: "Jim Felps"
 date: "6/14/2020"
 output:
-  powerpoint_presentation: default
+  slidy_presentation: default
   ioslides_presentation: default
+  powerpoint_presentation: default
+  beamer_presentation: default
 ---
 
 ```{r setup, include=FALSE}
