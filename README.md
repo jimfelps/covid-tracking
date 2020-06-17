@@ -1,6 +1,10 @@
 
 # Missouri
 
+On Mayt 22nd Missouri started reporting antibody testing separately from PCR. The spike you see at the end of May is due to the correction in reported testing on 5/23 (removal of antibody testing from total).
+
+Reporting Notes: https://covidtracking.com/data/state/missouri
+
 ![Missouri 7 day moving average](images/missouri.png)
 
 # Kansas
