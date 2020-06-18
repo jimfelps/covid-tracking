@@ -1,8 +1,8 @@
-Updated Last: 2020-06-17
+Updated Last: 2020-06-18
 
 # Missouri
 
-On Mayt 22nd Missouri started reporting antibody testing separately from PCR. The spike you see at the end of May is due to the correction in reported testing on 5/23 (removal of antibody testing from total).
+On May 22nd Missouri started reporting antibody testing separately from PCR. The spike you see at the end of May is due to the correction in reported testing on 5/23 (removal of antibody testing from total).
 
 Reporting Notes: https://covidtracking.com/data/state/missouri
 
@@ -10,15 +10,21 @@ Reporting Notes: https://covidtracking.com/data/state/missouri
 
 # Kansas
 
+Reporting Notes: https://covidtracking.com/data/state/kansas
+
 ![Kansas 7 day moving average](images/ks.png)
 
 # KC Metro County
+
+**NYT Data appears to stop on 2020-06-08. Looking into whether this is a problem with my code or the Covdata package or NYT**
 
 This data is just positive cases since testing numbers are unavailable from the NYT data. I pulled this data from Kieran Healy's Covdata package, which aggregates mobility data from Apple/Google, European data from the European Centers for Disease Control, State-level data from COVID Tracking Project, State/County data from NYT, and hospitalization data from the US CDC. More info at: https://kjhealy.github.io/covdata/.
 
 ![KC Metro County Data](images/metro_counties.png)
 
 # All MO Counties
+
+**NYT Data appears to stop on 2020-06-08. Looking into whether this is a problem with my code or the Covdata package or NYT**
 
 Same as KC Metro data. This is just daily positive tests on a 7 day average. It's a bit confusing but Kansas City and St. Louis Cities have their own health departments, so positive tests in KC are not included in the counties in which the resident lives but in the KC or STL number. To make this even more confusing, there is also a St. Louis county. The red line highlighted below are for **St. Louis county** and **Kansas City**
 
