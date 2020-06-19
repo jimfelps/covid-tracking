@@ -20,6 +20,12 @@ Driving data by metro county (plus KC) indexed to 100 beginning January 13, 2020
 
 ![Driving in Kansas City](images/metro_driving_apple.png)
 
+Google mobility data shows traffic across different categories of places. The visual below is the average change for all counties in the KC metro area (Jackson, Clay, Platte, Cass, Johnson (KS), Wyandotte (KS)).
+
+![Google Mobility all Counties](images/metro_google.png)
+
+**I'll break this down by county over the weekend.**
+
 # KC Metro County
 
 2020-06-19 update: NYT data is now current. The COVdata package I used to pull NYT data hasn't updated since the 8th, so I am pulling the raw data file directly from the Times repo [HERE](https://github.com/nytimes/covid-19-data). The link includes methodologies used (primarily around excess deaths, which I haven't done for the metro yet) but also an important note about the Kansas City data:
