@@ -1,10 +1,12 @@
 
-metro_counties_mo <- c("Platte", "Clay", "Jackson", "Cass")
+metro_counties_mo <- c("Platte", "Clay", "Jackson", "Cass", "Kansas City")
 metro_counties_ks <- c("Wyandotte", "Johnson")
 
-mo_counties <- nytcovcounty %>%
+nytcovid_counties <- read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv")
+
+mo_counties <- nytcovid_counties %>%
   filter(state == "Missouri")
-ks_counties <- nytcovcounty %>% 
+ks_counties <- nytcovid_counties %>% 
   filter(state == "Kansas")
 
 kc_counties_mo <- mo_counties %>%

@@ -19,6 +19,7 @@ knitr::opts_chunk$set(
 source('./scripts/Daily State Data.R')
 source('./scripts/KC Metro Counties - Covdata.R')
 source('./scripts/MO Counties - Covdata.R')
+source('./scripts/Apple Mobility Data.R')
 
 ```
 
@@ -128,6 +129,28 @@ mo_counties_7ma %>%
 ggsave("images/mo_counties.png")
 ```
 
+## Mobility Data - Metro Counties
+```{r fig.height=8, fig.width=12}
+vec_brks <- c(-50, 0, 50)
+vec_labs <- vec_brks + 100
+
+metro_driving %>% 
+  ggplot(aes(date, index, group = region, color = over_under)) +
+  geom_hline(yintercept = 0, color = "gray") +
+  geom_col() +
+  scale_y_continuous(breaks = vec_brks, labels = vec_labs) +
+  scale_color_manual(values = c("firebrick", "steelblue")) +
+  facet_wrap(~ region, nrow = 3, ncol = 3) +
+  labs(x = "Date", 
+       y = "Relative Mobility",
+       title = "Relative Trends in Apple Maps Usage for Driving, KC Metro Area") +
+  guides(color = FALSE) +
+  theme_minimal()
+
+ggsave("images/metro_driving_apple.png")
+```
+
+
 # Select States with Problematic Trends \n(based on media coverage)
 
 ## Arizona
@@ -230,7 +253,7 @@ ggsave("images/ar.png")
 ```{r fig.height=8, fig.width=12}
 state_data %>%
   filter(state == "CA",
-         date > "2020-04-01") %>%
+         date > "2020-04-15") %>%
   ggplot(aes(date, pos_rate_7dma)) +
     geom_line(stat = "identity")  +
     labs(

@@ -1,7 +1,8 @@
 select_counties <- c("St. Louis", "Kansas City")
 
 mo_counties %>% 
-  filter(county != "Putnam") %>% 
+  filter(county != "Putnam",
+         county != "Dade") %>% 
   group_by(county) %>% 
   arrange(desc(date)) %>% 
   mutate(new_pos = cases - lead(cases),
