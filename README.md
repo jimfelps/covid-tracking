@@ -16,7 +16,9 @@ On May 22nd Missouri started reporting antibody testing separately from PCR. The
 
 # KC Metro Mobility
 
-Driving data by metro county (plus KC) indexed to 100 beginning January 13, 2020. This dataset is freely available from Apple as a CSV and requires minimal cleaning to work with (Apple is the best). Data can be downloaded [HERE](https://www.apple.com/covid19/mobility)
+Driving data by metro county (plus KC) indexed to 100 beginning January 13, 2020. This dataset is freely available from Apple as a CSV and requires minimal cleaning to work with (Apple is the best). Data can be downloaded [HERE](https://www.apple.com/covid19/mobility) but you can also access my cleaned data for KC Metro Driving (metro_driving.xlsx) and all forms of transportation for the metro (apple_mobility_metro.xlsx) in the output folder of the repo [HERE](https://github.com/jimfelps/covid-tracking/tree/master/output).
+
+![Driving in Kansas City](images/metro_driving_apple.png)
 
 # KC Metro County
 
@@ -26,7 +28,7 @@ Driving data by metro county (plus KC) indexed to 100 beginning January 13, 2020
 
 Kansas City Health Department reports all cases/deaths within the KC limits, so all county data does not include KC cases.
 
-This data is just positive cases since testing numbers are unavailable from the NYT data. ~~I pulled this data from Kieran Healy's Covdata package, which aggregates mobility data from Apple/Google, European data from the European Centers for Disease Control, State-level data from COVID Tracking Project, State/County data from NYT, and hospitalization data from the US CDC. More info at: https://kjhealy.github.io/covdata/. ~~
+This data is just positive cases since testing numbers are unavailable from the NYT data. ~~I pulled this data from Kieran Healy's Covdata package, which aggregates mobility data from Apple/Google, European data from the European Centers for Disease Control, State-level data from COVID Tracking Project, State/County data from NYT, and hospitalization data from the US CDC. More info at: https://kjhealy.github.io/covdata/.~~
 
 ![KC Metro County Data](images/metro_counties.png)
 
