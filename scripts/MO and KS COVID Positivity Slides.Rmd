@@ -143,7 +143,8 @@ metro_driving %>%
   facet_wrap(~ region, nrow = 3, ncol = 3) +
   labs(x = "Date", 
        y = "Relative Mobility",
-       title = "Relative Trends in Apple Maps Usage for Driving, KC Metro Area") +
+       title = "Relative Trends in Apple Maps Usage for Driving, KC Metro Area",
+       caption = "Source: Apple\nVisual: Jim Felps") +
   guides(color = FALSE) +
   theme_minimal()
 

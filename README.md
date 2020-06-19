@@ -28,7 +28,7 @@ Driving data by metro county (plus KC) indexed to 100 beginning January 13, 2020
 
 Kansas City Health Department reports all cases/deaths within the KC limits, so all county data does not include KC cases.
 
-This data is just positive cases since testing numbers are unavailable from the NYT data. ~~I pulled this data from Kieran Healy's Covdata package, which aggregates mobility data from Apple/Google, European data from the European Centers for Disease Control, State-level data from COVID Tracking Project, State/County data from NYT, and hospitalization data from the US CDC. More info at: https://kjhealy.github.io/covdata/.~~
+This data is just positive cases since testing numbers are unavailable from the NYT data. 
 
 ![KC Metro County Data](images/metro_counties.png)
 
