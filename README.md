@@ -1,4 +1,4 @@
-Updated Last: 2020-06-19
+Updated Last: 2020-06-22
 
 # Missouri
 
@@ -24,7 +24,7 @@ Google mobility data shows traffic across different categories of places. The vi
 
 ![Google Mobility all Counties](images/metro_google.png)
 
-**I'll break this down by county over the weekend.**
+**I'll break this down by county sometime this week.**
 
 # KC Metro County
 
@@ -40,6 +40,8 @@ This data is just positive cases since testing numbers are unavailable from the 
 
 # All MO Counties
 
+2020-06-22: McDonald County...oh my lord. 196 new cases yesterday. I'll be interested to see if there's any other reason for this. Since testing amounts by county are not available, this could potentially explain the recent rise--this was always a hotspot in Missouri. Possible, I suppose, as it is on the intersection of MO, OK and AR. Freeer flow of traffic as the economy re-opens could also explain. 
+
 2020-06-19 update: NYT data is now current. The COVdata package I used to pull NYT data hasn't updated since the 8th, so I am pulling the raw data file directly from the Times repo [HERE](https://github.com/nytimes/covid-19-data). The link includes methodologies used (primarily around excess deaths, which I haven't done for the metro yet) but also an important note about the Kansas City data:
 
 *Four counties (Cass, Clay, Jackson and Platte) overlap the municipality of Kansas City, Mo. The cases and deaths that we show for these four counties are only for the portions exclusive of Kansas City. Cases and deaths for Kansas City are reported as their own line.*
@@ -49,6 +51,22 @@ Kansas City Health Department reports all cases/deaths within the KC limits, so 
 Same as KC Metro data. This is just daily positive tests on a 7 day average. It's a bit confusing but Kansas City and St. Louis Cities have their own health departments, so positive tests in KC are not included in the counties in which the resident lives but in the KC or STL number. To make this even more confusing, there is also a St. Louis county. The red line highlighted below are for **St. Louis county** and **Kansas City**
 
 ![Mo County Data](images/mo_counties.png)
+
+# Hospitalization/Ventilator Usage - MO
+
+Here's the current count of patients hospitalized or on a ventilator (assume that anyone on a vent is also hospitalized but that doesn't really matter). Daily new cases as bars.
+
+This chart interests me a lot. I wonder what causes the number of hospitalizations/vent usage over time as the number of cases stays equal or rises. I can think of a number of different reasons but am interested if I'm missing anything.
+
+- We've changed the way we treat COVID patients. 
+  - Maybe we hospitalized more patients early on as a precaution given how much we didn't know early on.
+  - Treatment has improved, possibly
+- While the economy has started to open up, those of us more at risk (older, immunocompromised, etc) have stayed home. Cases we see are for less risky segments of the population.
+- Early data from the state is wrong or includes observations from an earlier period
+
+I'll be sharing this publically to try to see if anyone else has an opinion.
+
+![MO hospitalization](images/mo_hos_vent.png)
 
 # Arizona
 

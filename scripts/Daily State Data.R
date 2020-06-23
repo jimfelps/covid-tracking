@@ -10,9 +10,10 @@ library(viridis)
 library(paletteer)
 library(covdata)
 library(gghighlight)
-library(ggrepel)
+library(ggtext)
+library(directlabels)
 
-theme_set(theme_ipsum())
+theme_set(theme_minimal())
 
 resp <- GET("https://covidtracking.com/api/v1/states/daily.csv")
 http_type(resp)
@@ -56,7 +57,8 @@ state_data <- jsonRespParsed %>%
   arrange(desc(date)) %>% 
   mutate(
    new_tests = totalTestResults - lead(totalTestResults),
-   new_pos = positive - lead(positive)
+   new_pos = positive - lead(positive),
+   death_rate = round(death / totalTestResults, 4)
   ) %>% 
   tq_mutate(
     select = new_tests,

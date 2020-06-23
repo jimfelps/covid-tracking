@@ -37,7 +37,7 @@ state_data %>%
       y = "",
       title = "COVID Testing Positivity, 7 Day Moving Average",
       subtitle = "Red portion = this week's data",
-      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/"
+      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/\nVisual: Jim Felps"
         )   +
   gghighlight(
     date >= floor_date(Sys.Date(), "weeks"),
@@ -46,6 +46,63 @@ state_data %>%
 
 ggsave("images/missouri.png")
 ```
+```{r fig.height=8, fig.width=12}
+
+# messing around with ventilator and hospitalizations...might adjust
+
+state_data %>%
+  filter(state == "MO",
+         date > "2020-03-01") %>%
+  ggplot() +
+    geom_bar(aes(x = date, y = new_pos), fill = "#0c7650", stat = "identity") +
+    geom_line(aes(x = date, y = onVentilatorCurrently), size = 1, , color = "#e8174a") +
+    geom_line(aes(x = date, y = hospitalizedCurrently), size = 1, color = "#1b61da") +
+    labs(
+      x = "",
+      y = "",
+      title = 'Patients in the State of Missouri Currently <b style="color:#1b61da">Hospitalized</b> or on <b style="color:#e8174a">Ventilators</b> for COVID',
+      subtitle = '<b style="color:#0c7650">Daily New Positive Cases</b>',
+      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/\nVisual: Jim Felps"
+        )   +
+  theme_minimal() +
+  theme(
+    plot.title = element_markdown(),
+    plot.subtitle = element_markdown()
+  ) +
+  guides(color = FALSE) 
+
+ggsave("images/mo_hos_vent.png")
+```
+
+```{r fig.height=8, fig.width=12}
+
+# messing around with ventilator and hospitalizations...might adjust
+
+state_data %>%
+  filter(state == "CA",
+         date > "2020-03-01") %>%
+  ggplot() +
+    geom_bar(aes(x = date, y = new_pos), fill = "#0c7650", stat = "identity") +
+    geom_line(aes(x = date, y = inIcuCurrently), size = 1, , color = "#e8174a") +
+    geom_line(aes(x = date, y = hospitalizedCurrently), size = 1, color = "#1b61da") +
+    labs(
+      x = "",
+      y = "",
+      title = 'Patients in the State of California Currently <b style="color:#1b61da">Hospitalized</b> or in <b style="color:#e8174a">ICU</b> for COVID',
+      subtitle = '<b style="color:#0c7650">Daily New Positive Cases</b>',
+      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/\nVisual: Jim Felps"
+        )   +
+  theme_minimal() +
+  theme(
+    plot.title = element_markdown(),
+    plot.subtitle = element_markdown()
+  ) +
+  guides(color = FALSE) 
+
+ggsave("images/ca_hos_icu.png")
+
+```
+
 
 ```{r fig.height=8, fig.width=12}
 state_data %>%
@@ -82,7 +139,7 @@ state_data %>%
       y = "",
       title = "COVID Testing Positivity, 7 Day Moving Average",
       subtitle = "Red portion = this week's data",
-      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/"
+      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/\nVisual: Jim Felps"
         ) +
   gghighlight(
     date >= floor_date(Sys.Date(), "weeks"),
@@ -99,13 +156,16 @@ ggsave("images/ks.png")
 metro_kc %>% 
   ggplot(aes(date, new_pos_7dma, group = county, color = county)) +
   geom_line(size = 1) +
+  geom_dl(aes(label = county), method = 'last.bumpup') +
   scale_color_viridis(discrete = TRUE) +
   labs(
     x = "",
     y = "",
     title = "Daily Positive Tests, 7 day moving average",
-    caption = "Data from NYT Covid repository \nhttps://github.com/nytimes/covid-19-data"
-  )
+    caption = "Data from NYT Covid repository \nhttps://github.com/nytimes/covid-19-data\nVisual: Jim Felps"
+  ) +
+  guides(color = FALSE) +
+  scale_x_date(expand = c(0,15))
 
 ggsave("images/metro_counties.png")
 ```
@@ -119,13 +179,15 @@ mo_counties_7ma %>%
   labs(
     x = "",
     y = "",
-    title = "Daily Positive Tests, 7 day moving average",
-    caption = "Data from NYT Covid repository \nhttps://github.com/nytimes/covid-19-data"
+    title = "Missouri Daily Positive Tests",
+    subtitle = "7 day moving average",
+    caption = "Data from NYT Covid repository \nhttps://github.com/nytimes/covid-19-data\nVisual: Jim Felps"
       ) +
   gghighlight(county %in% select_counties,
               unhighlighted_colour = alpha("steelblue", 0.4),
               label_key = county,
-              label_params = list(size = 3))
+              label_params = list(size = 3)) +
+  scale_x_date(expand = c(0,15))
 
 ggsave("images/mo_counties.png")
 ```
@@ -187,7 +249,7 @@ state_data %>%
       y = "",
       title = "COVID Testing Positivity, 7 Day Moving Average",
       subtitle = "",
-      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/"
+      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/\nVisual: Jim Felps"
         )
 
 ggsave("images/az.png")
@@ -206,7 +268,7 @@ state_data %>%
       y = "",
       title = "COVID Testing Positivity, 7 Day Moving Average",
       subtitle = "",
-      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/"
+      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/\nVisual: Jim Felps"
         )
 
 ggsave("images/ok.png")
@@ -225,7 +287,7 @@ state_data %>%
       y = "",
       title = "COVID Testing Positivity, 7 Day Moving Average",
       subtitle = "",
-      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/"
+      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/\nVisual: Jim Felps"
         )
 
 ggsave("images/al.png")
@@ -244,7 +306,7 @@ state_data %>%
       y = "",
       title = "COVID Testing Positivity, 7 Day Moving Average",
       subtitle = "",
-      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/"
+      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/\nVisual: Jim Felps"
         )
 
 ggsave("images/fl.png")
@@ -263,7 +325,7 @@ state_data %>%
       y = "",
       title = "COVID Testing Positivity, 7 Day Moving Average",
       subtitle = "",
-      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/"
+      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/\nVisual: Jim Felps"
         )
 
 ggsave("images/ar.png")
@@ -282,7 +344,7 @@ state_data %>%
       y = "",
       title = "COVID Testing Positivity, 7 Day Moving Average",
       subtitle = "",
-      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/"
+      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/\nVisual: Jim Felps"
         )
 
 ggsave("images/ca.png")
@@ -301,7 +363,7 @@ state_data %>%
       y = "",
       title = "COVID Testing Positivity, 7 Day Moving Average",
       subtitle = "",
-      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/"
+      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/\nVisual: Jim Felps"
         )
 
 ggsave("images/de.png")
@@ -320,7 +382,7 @@ state_data %>%
       y = "",
       title = "COVID Testing Positivity, 7 Day Moving Average",
       subtitle = "",
-      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/"
+      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/\nVisual: Jim Felps"
         )
 
 ggsave("images/ga.png")
@@ -339,7 +401,7 @@ state_data %>%
       y = "",
       title = "COVID Testing Positivity, 7 Day Moving Average",
       subtitle = "",
-      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/"
+      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/\nVisual: Jim Felps"
         )
 
 ggsave("images/or.png")
@@ -358,7 +420,7 @@ state_data %>%
       y = "",
       title = "COVID Testing Positivity, 7 Day Moving Average",
       subtitle = "",
-      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/"
+      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/\nVisual: Jim Felps"
         )
 
 ggsave("images/nc.png")
@@ -377,7 +439,7 @@ state_data %>%
       y = "",
       title = "COVID Testing Positivity, 7 Day Moving Average",
       subtitle = "",
-      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/"
+      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/\nVisual: Jim Felps"
         )
 
 ggsave("images/nv.png")
@@ -396,7 +458,7 @@ state_data %>%
       y = "",
       title = "COVID Testing Positivity, 7 Day Moving Average",
       subtitle = "",
-      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/"
+      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/\nVisual: Jim Felps"
         )
 
 ggsave("images/tx.png")
@@ -415,7 +477,7 @@ state_data %>%
       y = "",
       title = "COVID Testing Positivity, 7 Day Moving Average",
       subtitle = "",
-      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/"
+      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/\nVisual: Jim Felps"
         )
 
 ggsave("images/tn.png")
@@ -434,7 +496,7 @@ state_data %>%
       y = "",
       title = "COVID Testing Positivity, 7 Day Moving Average",
       subtitle = "",
-      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/"
+      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/\nVisual: Jim Felps"
         )
 
 ggsave("images/ca.png")
@@ -454,7 +516,7 @@ state_data %>%
       y = "",
       title = "COVID Testing Positivity, 7 Day Moving Average",
       subtitle = "",
-      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/"
+      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/\nVisual: Jim Felps"
         )
 
 ggsave("images/ny.png")
