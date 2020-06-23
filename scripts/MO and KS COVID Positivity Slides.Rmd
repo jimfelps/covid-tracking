@@ -185,10 +185,13 @@ mo_counties_7ma %>%
       ) +
   gghighlight(county %in% select_counties,
               unhighlighted_colour = alpha("steelblue", 0.4),
-              label_key = county,
-              label_params = list(size = 3)) +
+              use_direct_label = FALSE) +
+  geom_dl(aes(label = county), method = 'last.bumpup') +
   scale_x_date(expand = c(0,15))
 
+
+#label_key = county,
+#              label_params = list(size = 3)
 ggsave("images/mo_counties.png")
 ```
 
