@@ -2,6 +2,8 @@
 metro_counties_mo <- c("Platte", "Clay", "Jackson", "Cass", "Kansas City")
 metro_counties_ks <- c("Wyandotte", "Johnson")
 
+rolling_sum <- rollify(sum, window = 14)
+
 nytcovid_counties <- read_csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv")
 
 mo_counties <- nytcovid_counties %>%
@@ -76,5 +78,9 @@ metro_kc_grouped <- bind_rows(
     FUN = mean,
     na.rm = TRUE,
     col_rename = "new_deaths_7dma"
+  ) %>% 
+  mutate(
+    infect_window = rolling_sum(new_pos),
+    infect_prob = (infect_window/2000000)
   ) %>% 
   ungroup()

@@ -168,6 +168,27 @@ ggsave("images/metro_grouped.png")
 
 ```
 
+# Ballpark Odds of Meeting Someone Infected in the Metro
+# Metro Area New Positive Cases
+
+```{r fig.height=8, fig.width=12}
+metro_kc_grouped %>% 
+  ggplot(aes(date, infect_prob)) +
+  geom_line(size = 1, color = "firebrick") +
+  labs(
+    x = "",
+    y = "",
+    title = "Odds of meeting someone infected with COVID in KC Metro Area",
+    caption = "Data from NYT Covid repository \nhttps://github.com/nytimes/covid-19-data\nVisual: Jim Felps"
+  ) +
+  guides(color = FALSE) +
+  scale_x_date(expand = c(0,15)) +
+  scale_y_continuous(labels = scales::percent)
+
+ggsave("images/metro_prob.png")
+
+```
+
 # County-level analysis - KC Metro
 
 ## New Positive Cases by County
@@ -187,23 +208,7 @@ metro_kc %>%
   scale_x_date(expand = c(0,15))
 
 ggsave("images/metro_counties.png")
-## New Positive Cases by County
-```{r fig.height=8, fig.width=12}
-metro_kc %>% 
-  ggplot(aes(date, new_pos_7dma, group = county, color = county)) +
-  geom_line(size = 1) +
-  geom_dl(aes(label = county), method = 'last.bumpup') +
-  scale_color_viridis(discrete = TRUE) +
-  labs(
-    x = "",
-    y = "",
-    title = "Daily Positive Tests, 7 day moving average",
-    caption = "Data from NYT Covid repository \nhttps://github.com/nytimes/covid-19-data\nVisual: Jim Felps"
-  ) +
-  guides(color = FALSE) +
-  scale_x_date(expand = c(0,15))
 
-ggsave("images/metro_counties.png")
 ```
 
 ## All MO Counties

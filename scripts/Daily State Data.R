@@ -12,6 +12,7 @@ library(covdata)
 library(gghighlight)
 library(ggtext)
 library(directlabels)
+library(tibbletime)
 
 theme_set(theme_minimal())
 
