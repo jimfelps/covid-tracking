@@ -1,5 +1,5 @@
 
-url <- "https://covid19-static.cdn-apple.com/covid19-mobility-data/2010HotfixDev26/v3/en-us/applemobilitytrends-"                 
+url <- "https://covid19-static.cdn-apple.com/covid19-mobility-data/2010HotfixDev27/v3/en-us/applemobilitytrends-"                 
 date_data <- as.character(Sys.Date() - days(2))
 
 apple_counties_mo <- c("Platte County", "Clay County", "Jackson County", "Cass County", "Kansas City")
