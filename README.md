@@ -14,6 +14,12 @@ On May 22nd Missouri started reporting antibody testing separately from PCR. The
 
 ![Kansas 7 day moving average](images/ks.png)
 
+# Positive Cases, KC Metro
+
+All positive cases in the metro area (Wyandotte, Johnson Co KS, Jackson, Clay, Platte, Cass Co MO). Shown as a 7 day moving average.
+
+![KC Metro Grouped](images/metro_grouped.png)
+
 # KC Metro Mobility
 
 Driving data by metro county (plus KC) indexed to 100 beginning January 13, 2020. This dataset is freely available from Apple as a CSV and requires minimal cleaning to work with (Apple is the best). Data can be downloaded [HERE](https://www.apple.com/covid19/mobility) but you can also access my cleaned data for KC Metro Driving (metro_driving.xlsx) and all forms of transportation for the metro (apple_mobility_metro.xlsx) in the output folder of the repo [HERE](https://github.com/jimfelps/covid-tracking/tree/master/output).

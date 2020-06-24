@@ -149,8 +149,44 @@ state_data %>%
 ggsave("images/ks.png")
 ```
 
+# Metro Area New Positive Cases
+
+```{r fig.height=8, fig.width=12}
+metro_kc_grouped %>% 
+  ggplot(aes(date, new_pos_7dma)) +
+  geom_line(size = 1, color = "firebrick") +
+  labs(
+    x = "",
+    y = "",
+    title = "KC Metro Area Daily Positive Tests, 7 day moving average",
+    caption = "Data from NYT Covid repository \nhttps://github.com/nytimes/covid-19-data\nVisual: Jim Felps"
+  ) +
+  guides(color = FALSE) +
+  scale_x_date(expand = c(0,15))
+
+ggsave("images/metro_grouped.png")
+
+```
+
 # County-level analysis - KC Metro
 
+## New Positive Cases by County
+```{r fig.height=8, fig.width=12}
+metro_kc %>% 
+  ggplot(aes(date, new_pos_7dma, group = county, color = county)) +
+  geom_line(size = 1) +
+  geom_dl(aes(label = county), method = 'last.bumpup') +
+  scale_color_viridis(discrete = TRUE) +
+  labs(
+    x = "",
+    y = "",
+    title = "Daily Positive Tests, 7 day moving average",
+    caption = "Data from NYT Covid repository \nhttps://github.com/nytimes/covid-19-data\nVisual: Jim Felps"
+  ) +
+  guides(color = FALSE) +
+  scale_x_date(expand = c(0,15))
+
+ggsave("images/metro_counties.png")
 ## New Positive Cases by County
 ```{r fig.height=8, fig.width=12}
 metro_kc %>% 
