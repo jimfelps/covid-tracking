@@ -3,7 +3,7 @@ select_counties <- c("St. Louis", "Kansas City", "McDonald")
 mo_counties %>% 
   filter(county != "Ozark",
          county != "Wayne",
-         county != "Dade") %>% 
+         county != "Joplin") %>% 
   group_by(county) %>% 
   arrange(desc(date)) %>% 
   mutate(new_pos = cases - lead(cases),
@@ -28,6 +28,4 @@ mo_counties %>%
   ) %>% 
   ungroup() %>% 
   mutate(county = factor(county)) -> mo_counties_7ma
-
-
 

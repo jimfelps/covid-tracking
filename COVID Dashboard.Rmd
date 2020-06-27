@@ -1,0 +1,118 @@
+---
+title: "Jim's Crazy COVID Dashboard"
+output: 
+  flexdashboard::flex_dashboard:
+    storyboard: true
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+source('./scripts/Libraries and Variables.R')
+source('./scripts/Daily State Data.R')
+source('./scripts/KC Metro Counties - Covdata.R')
+source('./scripts/MO Counties - Covdata.R')
+source('./scripts/Apple Mobility Data.R')
+source('./scripts/Google Mobility Data.R')
+```
+
+
+### Missouri Hospitalizations/Ventilator Usage
+
+```{r}
+state_data %>%
+  filter(state == "MO",
+         date > "2020-03-01") %>%
+  ggplot() +
+    geom_bar(aes(x = date, y = new_pos), fill = "#0c7650", stat = "identity") +
+    geom_line(aes(x = date, y = onVentilatorCurrently), size = 1, color = "#e8174a") +
+    geom_line(aes(x = date, y = hospitalizedCurrently), color = "#1b61da") +
+    labs(
+      x = "",
+      y = "",
+      title = 'Patients in the State of Missouri Currently <b style="color:#1b61da">Hospitalized</b> or on <b style="color:#e8174a">Ventilators</b> for COVID',
+      subtitle = '<b style="color:#0c7650">Daily New Positive Cases</b>',
+      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/\nVisual: Jim Felps"
+        )   +
+  theme_minimal() +
+  theme(
+    plot.title = element_markdown(),
+    plot.subtitle = element_markdown()
+  ) +
+  guides(color = FALSE) -> a
+
+ggplotly(a)
+```
+
+***
+
+* New positive cases shown with current hospital and ventilator usage each day since March. 
+
+* Missouri has seen a fall in hospital usage as the cases have stayed relatively steady. Now that cases are rising, it will be interesting to see if hospitalizations also go up.
+
+### Missouri Overall Positivity Rate
+
+```{r}
+state_data %>%
+  filter(state == "MO",
+         date > "2020-03-27") %>%
+  ggplot(aes(date, pos_rate_7dma)) +
+    geom_line(stat = "identity", col = "#811609", size = 1) +
+    labs(
+      x = "",
+      y = "",
+      title = "Missouri COVID Testing Positivity, 7 Day Moving Average",
+      subtitle = '<b style="color:#811609">This Week\'s Data</b>',
+      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/\nVisual: Jim Felps"
+        )   +
+  gghighlight(
+    date >= floor_date(Sys.Date(), "weeks"),
+    unhighlighted_colour = alpha("steelblue", 0.4)
+  ) +
+  theme(
+    plot.subtitle = element_markdown()
+  ) -> b
+
+ggplotly(b)
+```
+
+
+***
+
+* <b style="color:#811609">This Week\'s Data</b>
+
+* This chart shows the overall positivity rate in the State of Missouri (positive tests / total tests reported). 
+
+* Since reporting of tests varies based on backlog, I'm showing the reported testing on a 7-day moving average.
+
+
+### Missouri Top Counties
+
+```{r}
+mo_counties_7ma %>% 
+  ggplot(aes(date, new_pos_7dma, group = county)) +
+  geom_line(size = 1, col = "darkred") +
+  labs(
+    x = "",
+    y = "",
+    title = "Missouri Daily Positive Tests",
+    subtitle = "7 day moving average",
+    caption = "Data from NYT Covid repository \nhttps://github.com/nytimes/covid-19-data\nVisual: Jim Felps"
+      ) +
+  gghighlight(county %in% select_counties,
+              unhighlighted_colour = alpha("steelblue", 0.4),
+              use_direct_label = FALSE) +
+  geom_dl(aes(label = county), method = 'last.bumpup') +
+  scale_x_date(expand = c(0,30)) -> c
+
+ggplotly(c)
+  
+```
+
+***
+
+* Top counties in Missouri for positive tests, 7-day moving average.
+
+* McDonald County sticks out the most here. Huge swing in positive tests starting 6/20-6/21.
+
+* Joplin is now reporting COVID cases in the city as of 6/25. Must be pulling out for greater visibility. Reviewing the cases for Jasper/Newton Counties and it appears that the Joplin cases were not taken out of the county cases so I'll be filtering Joplin out of the results for now while reviewing for the future.
+

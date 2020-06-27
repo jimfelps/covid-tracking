@@ -16,6 +16,7 @@ knitr::opts_chunk$set(
 
 
 ```{r}
+source('./scripts/Libraries and Variables.R')
 source('./scripts/Daily State Data.R')
 source('./scripts/KC Metro Counties - Covdata.R')
 source('./scripts/MO Counties - Covdata.R')
@@ -31,17 +32,20 @@ state_data %>%
   filter(state == "MO",
          date > "2020-03-27") %>%
   ggplot(aes(date, pos_rate_7dma)) +
-    geom_line(stat = "identity", col = "darkred", size = 1) +
+    geom_line(stat = "identity", col = "#811609", size = 1) +
     labs(
       x = "",
       y = "",
       title = "COVID Testing Positivity, 7 Day Moving Average",
-      subtitle = "Red portion = this week's data",
+      subtitle = '<b style="color:#811609">This Week\'s Data</b>',
       caption = "Data from COVID Tracking project\nhttps://covidtracking.com/\nVisual: Jim Felps"
         )   +
   gghighlight(
     date >= floor_date(Sys.Date(), "weeks"),
     unhighlighted_colour = alpha("steelblue", 0.4)
+  ) +
+  theme(
+    plot.subtitle = element_markdown()
   )
 
 ggsave("images/missouri.png")
@@ -55,8 +59,8 @@ state_data %>%
          date > "2020-03-01") %>%
   ggplot() +
     geom_bar(aes(x = date, y = new_pos), fill = "#0c7650", stat = "identity") +
-    geom_line(aes(x = date, y = onVentilatorCurrently), size = 1, , color = "#e8174a") +
-    geom_line(aes(x = date, y = hospitalizedCurrently), size = 1, color = "#1b61da") +
+    geom_line(aes(x = date, y = onVentilatorCurrently), size = 1, color = "#e8174a") +
+    geom_line(aes(x = date, y = hospitalizedCurrently), color = "#1b61da") +
     labs(
       x = "",
       y = "",
@@ -69,9 +73,11 @@ state_data %>%
     plot.title = element_markdown(),
     plot.subtitle = element_markdown()
   ) +
-  guides(color = FALSE) 
+  guides(color = FALSE) -> p
 
-ggsave("images/mo_hos_vent.png")
+ggplotly(p)
+
+ggsave("images/mo_hos_vent.png", p)
 ```
 
 ```{r fig.height=8, fig.width=12}
@@ -83,7 +89,7 @@ state_data %>%
          date > "2020-03-01") %>%
   ggplot() +
     geom_bar(aes(x = date, y = new_pos), fill = "#0c7650", stat = "identity") +
-    geom_line(aes(x = date, y = inIcuCurrently), size = 1, , color = "#e8174a") +
+    geom_line(aes(x = date, y = inIcuCurrently), size = 1, color = "#e8174a") +
     geom_line(aes(x = date, y = hospitalizedCurrently), size = 1, color = "#1b61da") +
     labs(
       x = "",
@@ -178,7 +184,7 @@ metro_kc_grouped %>%
   labs(
     x = "",
     y = "",
-    title = "Odds of meeting someone infected with COVID in KC Metro Area",
+    title = "Percent of Metro Area Population Potentially Contagious Each Day",
     caption = "Data from NYT Covid repository \nhttps://github.com/nytimes/covid-19-data\nVisual: Jim Felps"
   ) +
   guides(color = FALSE) +

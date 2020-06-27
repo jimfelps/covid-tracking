@@ -1,0 +1,226 @@
+---
+title: "Jim's Crazy COVID Dashboard"
+output: 
+  flexdashboard::flex_dashboard:
+    storyboard: true
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+source('./scripts/Libraries and Variables.R')
+source('./scripts/Daily State Data.R')
+source('./scripts/KC Metro Counties - Covdata.R')
+source('./scripts/MO Counties - Covdata.R')
+source('./scripts/Apple Mobility Data.R')
+source('./scripts/Google Mobility Data.R')
+```
+
+
+### Missouri Hospitalizations/Ventilator Usage
+
+```{r}
+state_data %>%
+  filter(state == "MO",
+         date > "2020-03-01") %>%
+  ggplot() +
+    geom_bar(aes(x = date, y = new_pos), fill = "#0c7650", stat = "identity") +
+    geom_line(aes(x = date, y = onVentilatorCurrently), size = 1, color = "#e8174a") +
+    geom_line(aes(x = date, y = hospitalizedCurrently), color = "#1b61da") +
+    labs(
+      x = "",
+      y = "",
+      title = 'Patients in the State of Missouri Currently <b style="color:#1b61da">Hospitalized</b> or on <b style="color:#e8174a">Ventilators</b> for COVID',
+      subtitle = '<b style="color:#0c7650">Daily New Positive Cases</b>',
+      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/\nVisual: Jim Felps"
+        )   +
+  theme_minimal() +
+  theme(
+    plot.title = element_markdown(),
+    plot.subtitle = element_markdown()
+  ) +
+  guides(color = FALSE) -> a
+
+ggplotly(a)
+```
+
+***
+
+* <b style="color:#0c7650">New positive cases</b> shown with * <b style="color:#1b61da">current hospital</b> and <b style="color:#e8174a">ventilator</b> usage each day since March. 
+
+* Missouri has seen a fall in hospital usage as the cases have stayed relatively steady. Now that cases are rising, it will be interesting to see if hospitalizations also go up.
+
+### Missouri Overall Positivity Rate
+
+```{r}
+state_data %>%
+  filter(state == "MO",
+         date > "2020-03-27") %>%
+  ggplot(aes(date, pos_rate_7dma)) +
+    geom_line(stat = "identity", col = "#811609", size = 1) +
+    labs(
+      x = "",
+      y = "",
+      title = "Missouri COVID Testing Positivity, 7 Day Moving Average",
+      subtitle = '<b style="color:#811609">This Week\'s Data</b>',
+      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/\nVisual: Jim Felps"
+        )   +
+  gghighlight(
+    date >= floor_date(Sys.Date(), "weeks"),
+    unhighlighted_colour = alpha("steelblue", 0.4)
+  ) +
+  theme(
+    plot.subtitle = element_markdown()
+  ) -> b
+
+ggplotly(b)
+```
+
+
+***
+
+* <b style="color:#811609">This Week\'s Data</b>
+
+* This chart shows the overall positivity rate in the State of Missouri (positive tests / total tests reported). 
+
+* Since reporting of tests varies based on backlog, I'm showing the reported testing on a 7-day moving average.
+
+### KC Area Contagious Population
+
+```{r}
+metro_kc_grouped %>% 
+  ggplot(aes(date, infect_prob)) +
+  geom_line(size = 0.5, color = "firebrick") +
+  labs(
+    x = "",
+    y = "",
+    title = "Percent of Metro Area Population Potentially Contagious Each Day",
+    caption = "Data from NYT Covid repository \nhttps://github.com/nytimes/covid-19-data\nVisual: Jim Felps"
+  ) +
+  guides(color = FALSE) +
+  scale_x_date(expand = c(0,15)) +
+  scale_y_continuous(labels = scales::percent) -> d
+
+ggplotly(d)
+```
+
+***
+
+* Ballpark estimate based on confirmed cases only
+
+* Assume that all positive cases were tested and received results on first day of infection and are contagious for 14 days
+
+* KC Metro defined as: Kansas City, Jackson County, Clay County, Platte County, Cass County, Johnson County (KS), and Wyandotte County (KS)
+
+### KC Metro County Positive Cases
+
+```{r}
+metro_kc %>% 
+  ggplot(aes(date, new_pos_7dma, group = county, color = county)) +
+  geom_line() +
+  geom_dl(aes(label = county), method = 'last.bumpup') +
+  scale_color_viridis(discrete = TRUE) +
+  labs(
+    x = "",
+    y = "",
+    title = "Daily Positive Tests, 7 day moving average",
+    caption = "Data from NYT Covid repository \nhttps://github.com/nytimes/covid-19-data\nVisual: Jim Felps"
+  ) +
+  guides(color = FALSE) +
+  scale_x_date(expand = c(0,15)) -> e
+
+ggplotly(e)
+```
+
+***
+
+* 7-day moving average, positive tests only. Counties have only recently started to report the number of tests. NYT data does not include testing for now.
+
+* Johnson (KS) has risen significantly while Kansas City and Wyandotte remain high
+
+* Personal preference, but KC is so widespread that I wish the reporting was all done on the county level so we could pin-point issues. Living in Platte County, it appears that the cases are low, but the population outside of Kansas City is also very low. PCHD reports both KC and Platte cases on their site and there are usually just as many KC/Platte cases as there are unincorporated Platte.
+
+### Missouri Top Counties
+
+```{r}
+mo_counties_7ma %>% 
+  ggplot(aes(date, new_pos_7dma, group = county)) +
+  geom_line(col = "darkred") +
+  labs(
+    x = "",
+    y = "",
+    title = "Missouri Daily Positive Tests",
+    subtitle = "7 day moving average",
+    caption = "Data from NYT Covid repository \nhttps://github.com/nytimes/covid-19-data\nVisual: Jim Felps"
+      ) +
+  gghighlight(county %in% select_counties,
+              unhighlighted_colour = alpha("steelblue", 0.4),
+              use_direct_label = FALSE) +
+  geom_dl(aes(label = county), method = 'last.bumpup') +
+  scale_x_date(expand = c(0,30)) -> c
+
+ggplotly(c)
+  
+```
+
+***
+
+* Top counties in Missouri for positive tests, 7-day moving average.
+
+* McDonald County sticks out the most here. Huge swing in positive tests starting 6/20-6/21.
+
+* Joplin is now reporting COVID cases in the city as of 6/25. Must be pulling out for greater visibility. Reviewing the cases for Jasper/Newton Counties and it appears that the Joplin cases were not taken out of the county cases so I'll be filtering Joplin out of the results for now while reviewing for the future.
+
+### County Mobility - Apple
+
+```{r}
+vec_brks <- c(-50, 0, 50)
+vec_labs <- vec_brks + 100
+
+metro_driving %>% 
+  ggplot(aes(date, index, group = region, color = over_under)) +
+  geom_hline(yintercept = 0, color = "gray") +
+  geom_col() +
+  scale_y_continuous(breaks = vec_brks, labels = vec_labs) +
+  scale_color_manual(values = c("firebrick", "steelblue")) +
+  facet_wrap(~ region, nrow = 3, ncol = 3) +
+  labs(x = "Date", 
+       y = "Relative Mobility",
+       title = "Relative Trends in Apple Maps Usage for Driving, KC Metro Area",
+       caption = "Source: Apple\nVisual: Jim Felps") +
+  guides(color = FALSE)
+```
+
+***
+
+* Driving data by metro county (plus KC) indexed to 100 beginning January 13, 2020
+
+* This dataset is freely available from Apple as a CSV and requires minimal cleaning to work with (Apple is the best). Data can be downloaded [HERE](https://www.apple.com/covid19/mobility) but you can also access my cleaned data for KC Metro Driving (metro_driving.xlsx) and all forms of transportation for the metro (apple_mobility_metro.xlsx) in the output folder of the repo [HERE](https://github.com/jimfelps/covid-tracking/tree/master/output)
+
+* I find the depth and length of Platte County's lack of mobility particularly interesting. Platte is one of the richest counties in MO (per capita), which seems to make sense. A lot of jobs that people hold in Platte County are easily transferred to the home office. 
+
+* Johnson and Clay Counties also saw similarly large decreases in mobility early on but appear to risen earlier than Platte. Johnson, Platte and Clay all had stay at home orders that lifted on 5/3
+
+### County Mobility - Google
+
+```{r}
+metro_summary %>% 
+  ggplot(aes(date, pct_change, group = type, color = type)) +
+  geom_line(size = 0.5, color = "gray80") +
+  geom_smooth(aes(color = type, group = type), se = FALSE) +
+  theme_minimal() +
+  facet_wrap(~ type, ncol = 3) +
+  labs(x = "Date",
+       y = "% Change from Baseline",
+       title = "Relative Trends in Mobility for Kinds of Location in the KC Metro",
+       subtitle = "",
+       caption = paste0("Source: Google LLC 'Google COVID-19 Community Mobility Reports'\nhttps://www.google.com/covid19/mobility/ Accessed: ", Sys.Date(),"\nVisual: Jim Felps")) +
+  theme(legend.position = "none")
+```
+
+***
+
+* Movement is relative to median activity from January 1st to February 6th
+
+* Travel to workplaces and retail stores dropped with the stay at home orders and has slowly risen
+
+* As of the end of June, travel to retail locations is similar to retail shops is roughly the same as January this year <b>BUT</b> this is not a good thing. We're in peak retail shopping season so it would be much higher in a normal year.
