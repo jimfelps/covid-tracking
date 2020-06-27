@@ -67,3 +67,4 @@ state_data <- jsonRespParsed %>%
     pos_rate_7dma = round(new_pos_7dma/new_test_7dma, 4)
   ) %>%
   ungroup()
+

@@ -297,13 +297,40 @@ state_data %>%
     labs(
       x = "",
       y = "",
-      title = "COVID Testing Positivity, 7 Day Moving Average",
+      title = "New COVID Positive Tests and Hospitalizations in Arizona",
       subtitle = "",
       caption = "Data from COVID Tracking project\nhttps://covidtracking.com/\nVisual: Jim Felps"
         )
 
 ggsave("images/az.png")
 ```
+
+## AZ Hospital and Vent Graph
+```{r}
+state_data %>%
+  filter(state == "AZ",
+         date > "2020-03-01") %>%
+  ggplot() +
+    geom_bar(aes(x = date, y = new_pos), fill = "#0c7650", stat = "identity") +
+    geom_line(aes(x = date, y = onVentilatorCurrently), size = 1, color = "#e8174a") +
+    geom_line(aes(x = date, y = hospitalizedCurrently), size = 1, color = "#1b61da") +
+    labs(
+      x = "",
+      y = "",
+      title = 'Patients in Arizona Currently <b style="color:#1b61da">Hospitalized</b> or on <b style="color:#e8174a">Ventilators</b> for COVID',
+      subtitle = '<b style="color:#0c7650">Daily New Positive Cases</b>',
+      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/\nVisual: Jim Felps"
+        )   +
+  theme_minimal() +
+  theme(
+    plot.title = element_markdown(),
+    plot.subtitle = element_markdown()
+  ) +
+  guides(color = FALSE)
+
+ggsave("images/az_hos_vent.png")
+```
+
 
 ## OK
 
