@@ -59,8 +59,8 @@ state_data %>%
          date > "2020-03-01") %>%
   ggplot() +
     geom_bar(aes(x = date, y = new_pos), fill = "#0c7650", stat = "identity") +
-    geom_line(aes(x = date, y = onVentilatorCurrently), size = 1, color = "#e8174a") +
-    geom_line(aes(x = date, y = hospitalizedCurrently), color = "#1b61da") +
+    geom_line(aes(x = date, y = on_ventilator_currently), size = 1, color = "#e8174a") +
+    geom_line(aes(x = date, y = hospitalized_currently), color = "#1b61da") +
     labs(
       x = "",
       y = "",
@@ -73,11 +73,9 @@ state_data %>%
     plot.title = element_markdown(),
     plot.subtitle = element_markdown()
   ) +
-  guides(color = FALSE) -> p
+  guides(color = FALSE)
 
-ggplotly(p)
-
-ggsave("images/mo_hos_vent.png", p)
+ggsave("images/mo_hos_vent.png")
 ```
 
 ```{r fig.height=8, fig.width=12}
@@ -89,8 +87,8 @@ state_data %>%
          date > "2020-03-01") %>%
   ggplot() +
     geom_bar(aes(x = date, y = new_pos), fill = "#0c7650", stat = "identity") +
-    geom_line(aes(x = date, y = inIcuCurrently), size = 1, color = "#e8174a") +
-    geom_line(aes(x = date, y = hospitalizedCurrently), size = 1, color = "#1b61da") +
+    geom_line(aes(x = date, y = in_icu_currently), size = 1, color = "#e8174a") +
+    geom_line(aes(x = date, y = hospitalized_currently), size = 1, color = "#1b61da") +
     labs(
       x = "",
       y = "",
