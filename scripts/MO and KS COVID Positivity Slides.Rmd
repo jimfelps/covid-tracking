@@ -186,16 +186,17 @@ metro_kc_grouped %>%
     x = "",
     y = "",
     title = "Percent of Metro Area Population Potentially Contagious Each Day",
-    subtitle = "Based on <b style='color:#d61616'>Confirmed Positives</b> and <b style='color:#d616b9'>Projected Positives</b>. Projected positives based on WaPost quote indicating that the true number of cases is likely ten times what we've confirmed.",
+    subtitle = 'Based on <b style="color:#d61616">Confirmed Positives</b> and <b style="color:#d616b9">Projected Positives</b>. Projected positives based on WaPost quote indicating that the true number of cases is likely ten times what we\'ve confirmed.',
     caption = "Data from NYT Covid repository \nhttps://github.com/nytimes/covid-19-data\nVisual: Jim Felps"
   ) +
   guides(color = FALSE) +
   scale_x_date(expand = c(0,15)) +
   scale_y_continuous(labels = scales::percent) +
+  theme_minimal() +
   theme(
+    plot.title = element_markdown(),
     plot.subtitle = element_markdown()
-  ) +
-  theme_minimal()
+  )
 
 ggsave("images/metro_prob.png", width = 16, height = 9, dpi = "retina")
 
