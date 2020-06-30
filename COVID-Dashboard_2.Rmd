@@ -56,29 +56,20 @@ state_data %>%
   filter(state == "MO",
          date > "2020-03-27") %>%
   ggplot(aes(date, pos_rate_7dma)) +
-    geom_line(stat = "identity", col = "#811609", size = 1) +
+    geom_line(stat = "identity", col = "#811609") +
     labs(
       x = "",
       y = "",
       title = "Missouri COVID Testing Positivity, 7 Day Moving Average",
-      subtitle = '<b style="color:#811609">This Week\'s Data</b>',
+      subtitle = '',
       caption = "Data from COVID Tracking project\nhttps://covidtracking.com/\nVisual: Jim Felps"
-        )   +
-  gghighlight(
-    date >= floor_date(Sys.Date(), "weeks"),
-    unhighlighted_colour = alpha("steelblue", 0.4)
-  ) +
-  theme(
-    plot.subtitle = element_markdown()
-  ) -> b
+        ) -> b
 
 ggplotly(b)
 ```
 
 
 ***
-
-* <b style="color:#811609">This Week\'s Data</b>
 
 * This chart shows the overall positivity rate in the State of Missouri (positive tests / total tests reported). 
 

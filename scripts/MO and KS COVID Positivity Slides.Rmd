@@ -177,21 +177,27 @@ ggsave("images/metro_grouped.png")
 # Ballpark Odds of Meeting Someone Infected in the Metro
 # Metro Area New Positive Cases
 
-```{r fig.height=8, fig.width=12}
+```{r}
 metro_kc_grouped %>% 
-  ggplot(aes(date, infect_prob)) +
-  geom_line(size = 1, color = "firebrick") +
+  ggplot() +
+  geom_line(aes(date, infect_pop), color = "#d61616") +
+  geom_line(aes(date, proj_infect_pop), color = "#d616b9") +
   labs(
     x = "",
     y = "",
     title = "Percent of Metro Area Population Potentially Contagious Each Day",
+    subtitle = "Based on <b style='color:#d61616'>Confirmed Positives</b> and <b style='color:#d616b9'>Projected Positives</b>. Projected positives based on WaPost quote indicating that the true number of cases is likely ten times what we've confirmed.",
     caption = "Data from NYT Covid repository \nhttps://github.com/nytimes/covid-19-data\nVisual: Jim Felps"
   ) +
   guides(color = FALSE) +
   scale_x_date(expand = c(0,15)) +
-  scale_y_continuous(labels = scales::percent)
+  scale_y_continuous(labels = scales::percent) +
+  theme(
+    plot.subtitle = element_markdown()
+  ) +
+  theme_minimal()
 
-ggsave("images/metro_prob.png")
+ggsave("images/metro_prob.png", width = 16, height = 9, dpi = "retina")
 
 ```
 
@@ -283,6 +289,65 @@ metro_summary %>%
 ggsave("images/metro_google.png")
 ```
 
+# Google Mobility - Platte County
+```{r fig.height=8, fig.width=12}
+platte_summary %>% 
+  ggplot(aes(date, pct_change, group = type, color = type)) +
+  geom_line(size = 0.5, color = "gray80") +
+  geom_smooth(aes(color = type, group = type), se = FALSE) +
+  theme_minimal() +
+  facet_wrap(~ type, ncol = 3) +
+  labs(x = "Date",
+       y = "% Change from Baseline",
+       title = "Platte County Relative Trends in Mobility",
+       subtitle = "Data relative to median activity from 1/3 to 2/6",
+       caption = paste0("Source: Google LLC 'Google COVID-19 Community Mobility Reports'\nhttps://www.google.com/covid19/mobility/ Accessed: ", Sys.Date(),"\nVisual: Jim Felps")) +
+  theme(legend.position = "none")
+
+ggsave("images/platte_google.png")
+
+
+```
+
+# Google Mobility - Jackson County
+```{r fig.height=8, fig.width=12}
+jackson_summary %>% 
+  ggplot(aes(date, pct_change, group = type, color = type)) +
+  geom_line(size = 0.5, color = "gray80") +
+  geom_smooth(aes(color = type, group = type), se = FALSE) +
+  theme_minimal() +
+  facet_wrap(~ type, ncol = 3) +
+  labs(x = "Date",
+       y = "% Change from Baseline",
+       title = "Jackson County Relative Trends in Mobility",
+       subtitle = "Data relative to median activity from 1/3 to 2/6",
+       caption = paste0("Source: Google LLC 'Google COVID-19 Community Mobility Reports'\nhttps://www.google.com/covid19/mobility/ Accessed: ", Sys.Date(),"\nVisual: Jim Felps")) +
+  theme(legend.position = "none")
+
+ggsave("images/jackson_google.png")
+
+
+```
+
+# Google Mobility - Clay County
+```{r fig.height=8, fig.width=12}
+clay_summary %>% 
+  ggplot(aes(date, pct_change, group = type, color = type)) +
+  geom_line(size = 0.5, color = "gray80") +
+  geom_smooth(aes(color = type, group = type), se = FALSE) +
+  theme_minimal() +
+  facet_wrap(~ type, ncol = 3) +
+  labs(x = "Date",
+       y = "% Change from Baseline",
+       title = "Clay County Relative Trends in Mobility",
+       subtitle = "Data relative to median activity from 1/3 to 2/6",
+       caption = paste0("Source: Google LLC 'Google COVID-19 Community Mobility Reports'\nhttps://www.google.com/covid19/mobility/ Accessed: ", Sys.Date(),"\nVisual: Jim Felps")) +
+  theme(legend.position = "none")
+
+ggsave("images/clay_google.png")
+
+
+```
 
 # Select States with Problematic Trends \n(based on media coverage)
 
@@ -303,10 +368,12 @@ state_data %>%
         )
 
 ggsave("images/az.png")
+
 ```
 
 ## AZ Hospital and Vent Graph
 ```{r}
+
 state_data %>%
   filter(state == "AZ",
          date > "2020-03-01") %>%

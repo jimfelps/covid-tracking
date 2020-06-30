@@ -1,4 +1,4 @@
-Updated Last: 2020-06-26
+Updated Last: 2020-06-29
 
 # Missouri
 
@@ -19,6 +19,12 @@ On May 22nd Missouri started reporting antibody testing separately from PCR. The
 All positive cases in the metro area (Wyandotte, Johnson Co KS, Jackson, Clay, Platte, Cass Co MO). Shown as a 7 day moving average.
 
 ![KC Metro Grouped](images/metro_grouped.png)
+
+# Percent of population that could be infectious
+
+Ballpark figure and projection of the potential number of people in the KC area that are currently infected and potentially spreading the virus. Pink line is the projection based on [THIS ARTICLE](https://www.washingtonpost.com/health/2020/06/25/coronavirus-cases-10-times-larger/) that says the actual number of positive cases is 10x higher than the actual positives. Just a simple look, with a number of assumptions.
+
+![KC Metro Pop](images/metro_prob.png)
 
 # KC Metro Mobility
 

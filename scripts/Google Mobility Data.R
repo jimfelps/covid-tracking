@@ -43,18 +43,51 @@ google_mobility_metro %>%
     values_to = "pct_change"
   ) -> metro_summary
 
-metro_summary %>% 
-  ggplot(aes(date, pct_change, group = type, color = type)) +
-  geom_line(size = 0.5, color = "gray80") +
-  geom_smooth(aes(color = type, group = type), se = FALSE) +
-  theme_minimal() +
-  facet_wrap(~ type, ncol = 3) +
-  labs(x = "Date",
-       y = "% Change from Baseline",
-       title = "Relative Trends in Mobility for Kinds of Location in the KC Metro",
-       subtitle = "Data relative to median activity from 1/3 to 2/6",
-       caption = paste0("Source: Google LLC 'Google COVID-19 Community Mobility Reports'\nhttps://www.google.com/covid19/mobility/ Accessed: ", Sys.Date())) +
-  theme(legend.position = "none")
+google_mobility_metro %>% 
+  filter(sub_region_2 == "Platte County") %>% 
+  group_by(date) %>% 
+  summarise(across(c("Retail", "Grocery", "Parks", "Transit", "Workplaces", "Residential"), mean)) %>% 
+  ungroup() %>% 
+  pivot_longer(
+    cols = Retail:Residential,
+    names_to = "type",
+    values_to = "pct_change"
+  ) -> platte_summary
+
+google_mobility_metro %>% 
+  filter(sub_region_2 == "Jackson County") %>% 
+  group_by(date) %>% 
+  summarise(across(c("Retail", "Grocery", "Parks", "Transit", "Workplaces", "Residential"), mean)) %>% 
+  ungroup() %>% 
+  pivot_longer(
+    cols = Retail:Residential,
+    names_to = "type",
+    values_to = "pct_change"
+  ) -> jackson_summary
+
+google_mobility_metro %>% 
+  filter(sub_region_2 == "Clay County") %>% 
+  group_by(date) %>% 
+  summarise(across(c("Retail", "Grocery", "Parks", "Transit", "Workplaces", "Residential"), mean)) %>% 
+  ungroup() %>% 
+  pivot_longer(
+    cols = Retail:Residential,
+    names_to = "type",
+    values_to = "pct_change"
+  ) -> clay_summary
+
+#metro_summary %>% 
+#  ggplot(aes(date, pct_change, group = type, color = type)) +
+#  geom_line(size = 0.5, color = "gray80") +
+#  geom_smooth(aes(color = type, group = type), se = FALSE) +
+#  theme_minimal() +
+#  facet_wrap(~ type, ncol = 3) +
+#  labs(x = "Date",
+#       y = "% Change from Baseline",
+#       title = "Relative Trends in Mobility for Kinds of Location in the KC Metro",
+#       subtitle = "Data relative to median activity from 1/3 to 2/6",
+#       caption = paste0("Source: Google LLC 'Google COVID-19 Community Mobility Reports'\nhttps://www.google.com/covid19/mobility/ Accessed: ", Sys.Date())) +
+#  theme(legend.position = "none")
 
 #Google LLC "Google COVID-19 Community Mobility Reports".
 #https://www.google.com/covid19/mobility/ Accessed: <date>.
