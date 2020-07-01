@@ -4,6 +4,8 @@ google_mobility <- read_csv("https://www.gstatic.com/covid19/mobility/Global_Mob
                               sub_region_2 = col_character()
                             ))
 
+### CLEAN GOOGLE DATA, FILTER FOR KC METRO -----------------------------------------------------
+
 mo_google <- google_mobility %>% 
   filter(sub_region_1 == "Missouri",
          sub_region_2 %in% apple_counties_mo)
@@ -33,6 +35,8 @@ bind_rows(mo_google,
     )
   ) -> google_mobility_metro
 
+### METRO AREA SUMMARY ------------------------------------------------------------------------
+
 google_mobility_metro %>% 
   group_by(date) %>% 
   summarise(across(c("Retail", "Grocery", "Parks", "Transit", "Workplaces", "Residential"), mean)) %>% 
@@ -42,6 +46,8 @@ google_mobility_metro %>%
     names_to = "type",
     values_to = "pct_change"
   ) -> metro_summary
+
+### PLATTE COUNTY SUMMARY ----------------------------------------------------------------------
 
 google_mobility_metro %>% 
   filter(sub_region_2 == "Platte County") %>% 
@@ -54,6 +60,8 @@ google_mobility_metro %>%
     values_to = "pct_change"
   ) -> platte_summary
 
+### JACKSON COUNTY SUMMARY ----------------------------------------------------------------------
+
 google_mobility_metro %>% 
   filter(sub_region_2 == "Jackson County") %>% 
   group_by(date) %>% 
@@ -65,6 +73,8 @@ google_mobility_metro %>%
     values_to = "pct_change"
   ) -> jackson_summary
 
+### CLAY COUNTY SUMMARY ----------------------------------------------------------------------
+
 google_mobility_metro %>% 
   filter(sub_region_2 == "Clay County") %>% 
   group_by(date) %>% 
@@ -75,6 +85,32 @@ google_mobility_metro %>%
     names_to = "type",
     values_to = "pct_change"
   ) -> clay_summary
+
+### WORKPLACE MOVEMENT ----------------------------------------------------------------------
+
+google_mobility_metro %>% 
+  group_by(sub_region_2, date) %>% 
+  summarise(across(c("Retail", "Grocery", "Parks", "Transit", "Workplaces", "Residential"), mean)) %>% 
+  ungroup() %>% 
+  pivot_longer(
+    cols = Retail:Residential,
+    names_to = "type",
+    values_to = "pct_change"
+  ) %>% 
+  filter(type == "Workplaces")-> kc_work_counties
+
+### PARKS MOVEMENT ----------------------------------------------------------------------
+
+google_mobility_metro %>% 
+  group_by(sub_region_2, date) %>% 
+  summarise(across(c("Retail", "Grocery", "Parks", "Transit", "Workplaces", "Residential"), mean)) %>% 
+  ungroup() %>% 
+  pivot_longer(
+    cols = Retail:Residential,
+    names_to = "type",
+    values_to = "pct_change"
+  ) %>% 
+  filter(type == "Parks")-> kc_parks_counties
 
 #metro_summary %>% 
 #  ggplot(aes(date, pct_change, group = type, color = type)) +

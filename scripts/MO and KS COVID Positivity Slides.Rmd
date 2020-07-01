@@ -274,23 +274,46 @@ metro_driving %>%
 ggsave("images/metro_driving_apple.png")
 ```
 
-# Google Mobility Data
+# Workplace Mobility - KC Metro
 ```{r fig.height=8, fig.width=12}
-metro_summary %>% 
-  ggplot(aes(date, pct_change, group = type, color = type)) +
+kc_work_counties %>% 
+  ggplot(aes(date, pct_change, group = sub_region_2, color = sub_region_2)) +
   geom_line(size = 0.5, color = "gray80") +
-  geom_smooth(aes(color = type, group = type), se = FALSE) +
+  geom_smooth(aes(color = sub_region_2, group = sub_region_2), se = FALSE) +
   theme_minimal() +
-  facet_wrap(~ type, ncol = 3) +
+  facet_wrap(~ sub_region_2, ncol = 3) +
   labs(x = "Date",
        y = "% Change from Baseline",
-       title = "Relative Trends in Mobility for Kinds of Location in the KC Metro",
+       title = "Trends in Mobility to Workplaces in the Metro",
        subtitle = "Data relative to median activity from 1/3 to 2/6",
        caption = paste0("Source: Google LLC 'Google COVID-19 Community Mobility Reports'\nhttps://www.google.com/covid19/mobility/ Accessed: ", Sys.Date(),"\nVisual: Jim Felps")) +
   theme(legend.position = "none")
 
-ggsave("images/metro_google.png")
+ggsave("images/kc_work_google.png")
+
+
 ```
+
+# Park Mobility - KC Metro
+```{r fig.height=8, fig.width=12}
+kc_parks_counties %>% 
+  ggplot(aes(date, pct_change, group = sub_region_2, color = sub_region_2)) +
+  geom_line(size = 0.5, color = "gray80") +
+  geom_smooth(aes(color = sub_region_2, group = sub_region_2), se = FALSE) +
+  theme_minimal() +
+  facet_wrap(~ sub_region_2, ncol = 3) +
+  labs(x = "Date",
+       y = "% Change from Baseline",
+       title = "Trends in Mobility to Parks - KC Metro Area",
+       subtitle = "Data relative to median activity from 1/3 to 2/6",
+       caption = paste0("Source: Google LLC 'Google COVID-19 Community Mobility Reports'\nhttps://www.google.com/covid19/mobility/ Accessed: ", Sys.Date(),"\nVisual: Jim Felps")) +
+  theme(legend.position = "none")
+
+ggsave("images/kc_parks_google.png")
+
+```
+
+
 
 # Google Mobility - Platte County
 ```{r fig.height=8, fig.width=12}
