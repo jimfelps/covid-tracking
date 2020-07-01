@@ -57,14 +57,15 @@ ggsave("images/missouri.png")
 state_data %>%
   filter(state == "MO",
          date > "2020-03-01") %>%
+  mutate(hospitalized_mean = rolling_mean(hospitalized_currently)) %>% 
   ggplot() +
     geom_bar(aes(x = date, y = new_pos), fill = "#0c7650", stat = "identity") +
     geom_line(aes(x = date, y = on_ventilator_currently), size = 1, color = "#e8174a") +
-    geom_line(aes(x = date, y = hospitalized_currently), color = "#1b61da") +
+    geom_line(aes(x = date, y = hospitalized_mean), color = "#1b61da") +
     labs(
       x = "",
       y = "",
-      title = 'Patients in the State of Missouri Currently <b style="color:#1b61da">Hospitalized</b> or on <b style="color:#e8174a">Ventilators</b> for COVID',
+      title = 'Patients in the State of Missouri Currently <b style="color:#1b61da">Hospitalized (7-dma)</b> or on <b style="color:#e8174a">Ventilators</b> for COVID',
       subtitle = '<b style="color:#0c7650">Daily New Positive Cases</b>',
       caption = "Data from COVID Tracking project\nhttps://covidtracking.com/\nVisual: Jim Felps"
         )   +

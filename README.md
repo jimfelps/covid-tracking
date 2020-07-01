@@ -84,37 +84,3 @@ I'll be sharing this publically to try to see if anyone else has an opinion.
 
 [Reporting Notes](https://covidtracking.com/data/state/arizona)
 
-
-![Arizona 7 day moving average](images/az.png)
-
-# Oklahoma
-
-[Reporting Notes](https://covidtracking.com/data/state/oklahoma)
-
-
-![Oklahoma 7 day moving average](images/ok.png)
-
-# Alabama
-
-[Reporting Notes](https://covidtracking.com/data/state/alabama)
-
-
-![Alabama 7 day moving average](images/al.png)
-
-# Florida
-
-The site of all the "sports bubbles". The state started mixing in antibody testing numbers into PCR on 5/15 which could help explain the sharp decline in mid-May.
-
-[Reporting Notes](https://covidtracking.com/data/state/florida)
-
-
-![Florida 7 day moving average](images/fl.png)
-
-# New York
-
-I was just interested to see how this state's curve looked given how bad the epidemic was in NYC.
-
-[Reporting Notes](https://covidtracking.com/data/state/new-york)
-
-
-![New York 7 day moving average](images/ny.png)
