@@ -40,6 +40,8 @@ Google mobility data shows traffic across different categories of places. The vi
 
 # KC Metro County
 
+2020-07-02 update: After discussing discrepencies between NYT data and official DataKC numbers [(link)](https://www.kcmo.gov/city-hall/departments/health/coronavirus-covid-19/covid-19-totals), it sounds like the case count for KC is too high and the county count is too low. I was told that the state assigns cases to KC, but because of the city's complicated boundaries there are several cases that are removed by the city after verification of recidency. These cases still belong in the metro area, but should be counted in the county numbers. No easy way around this other than pulling data from each county and the city.
+
 2020-06-19 update: NYT data is now current. The COVdata package I used to pull NYT data hasn't updated since the 8th, so I am pulling the raw data file directly from the Times repo [HERE](https://github.com/nytimes/covid-19-data). The link includes methodologies used (primarily around excess deaths, which I haven't done for the metro yet) but also an important note about the Kansas City data:
 
 *Four counties (Cass, Clay, Jackson and Platte) overlap the municipality of Kansas City, Mo. The cases and deaths that we show for these four counties are only for the portions exclusive of Kansas City. Cases and deaths for Kansas City are reported as their own line.*
@@ -79,8 +81,4 @@ This chart interests me a lot. I wonder what causes the number of hospitalizatio
 I'll be sharing this publically to try to see if anyone else has an opinion.
 
 ![MO hospitalization](images/mo_hos_vent.png)
-
-# Arizona
-
-[Reporting Notes](https://covidtracking.com/data/state/arizona)
 
