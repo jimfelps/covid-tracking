@@ -59,14 +59,14 @@ state_data %>%
          date > "2020-03-01") %>%
   mutate(hospitalized_mean = rolling_mean(hospitalized_currently)) %>% 
   ggplot() +
-    geom_bar(aes(x = date, y = new_pos), fill = "#0c7650", stat = "identity") +
+    geom_bar(aes(x = date, y = new_pos), fill = "#53de8e", stat = "identity") +
     geom_line(aes(x = date, y = on_ventilator_currently), size = 1, color = "#e8174a") +
     geom_line(aes(x = date, y = hospitalized_mean), color = "#1b61da") +
     labs(
       x = "",
       y = "",
       title = 'Patients in the State of Missouri Currently <b style="color:#1b61da">Hospitalized (7-dma)</b> or on <b style="color:#e8174a">Ventilators</b> for COVID',
-      subtitle = '<b style="color:#0c7650">Daily New Positive Cases</b>',
+      subtitle = '<b style="color:#53de8e">Daily New Positive Cases</b>',
       caption = "Data from COVID Tracking project\nhttps://covidtracking.com/\nVisual: Jim Felps"
         )   +
   theme_minimal() +
@@ -77,6 +77,7 @@ state_data %>%
   guides(color = FALSE)
 
 ggsave("images/mo_hos_vent.png")
+
 ```
 
 ```{r fig.height=8, fig.width=12}
@@ -87,14 +88,14 @@ state_data %>%
   filter(state == "CA",
          date > "2020-03-01") %>%
   ggplot() +
-    geom_bar(aes(x = date, y = new_pos), fill = "#0c7650", stat = "identity") +
+    geom_bar(aes(x = date, y = new_pos), fill = "#53de8e", stat = "identity") +
     geom_line(aes(x = date, y = in_icu_currently), size = 1, color = "#e8174a") +
     geom_line(aes(x = date, y = hospitalized_currently), size = 1, color = "#1b61da") +
     labs(
       x = "",
       y = "",
       title = 'Patients in the State of California Currently <b style="color:#1b61da">Hospitalized</b> or in <b style="color:#e8174a">ICU</b> for COVID',
-      subtitle = '<b style="color:#0c7650">Daily New Positive Cases</b>',
+      subtitle = '<b style="color:#53de8e">Daily New Positive Cases</b>',
       caption = "Data from COVID Tracking project\nhttps://covidtracking.com/\nVisual: Jim Felps"
         )   +
   theme_minimal() +
@@ -388,7 +389,7 @@ state_data %>%
     labs(
       x = "",
       y = "",
-      title = "New COVID Positive Tests and Hospitalizations in Arizona",
+      title = "COVID Testing Positivity, 7 Day Moving Average",
       subtitle = "",
       caption = "Data from COVID Tracking project\nhttps://covidtracking.com/\nVisual: Jim Felps"
         )
@@ -403,15 +404,15 @@ ggsave("images/az.png")
 state_data %>%
   filter(state == "AZ",
          date > "2020-03-01") %>%
+  mutate(hospitalized_mean = rolling_mean(hospitalized_currently)) %>% 
   ggplot() +
-    geom_bar(aes(x = date, y = new_pos), fill = "#0c7650", stat = "identity") +
-    geom_line(aes(x = date, y = on_ventilator_currently), size = 1, color = "#e8174a") +
-    geom_line(aes(x = date, y = hospitalized_currently), size = 1, color = "#1b61da") +
+    geom_bar(aes(x = date, y = new_pos), fill = "#53de8e", stat = "identity") +
+    geom_line(aes(x = date, y = hospitalized_mean), color = "#1b61da") +
     labs(
       x = "",
       y = "",
-      title = 'Patients in Arizona Currently <b style="color:#1b61da">Hospitalized</b> or on <b style="color:#e8174a">Ventilators</b> for COVID',
-      subtitle = '<b style="color:#0c7650">Daily New Positive Cases</b>',
+      title = 'Patients in Arizona Currently <b style="color:#1b61da">Hospitalized (7-dma)</b> or on <b style="color:#e8174a">Ventilators</b> for COVID',
+      subtitle = '<b style="color:#53de8e">Daily New Positive Cases</b>',
       caption = "Data from COVID Tracking project\nhttps://covidtracking.com/\nVisual: Jim Felps"
         )   +
   theme_minimal() +
@@ -430,14 +431,15 @@ ggsave("images/az_hos_vent.png", width = 16, height = 9, dpi = "retina")
 state_data %>%
   filter(state == "TX",
          date > "2020-03-01") %>%
+  mutate(hospitalized_mean = rolling_mean(hospitalized_currently)) %>% 
   ggplot() +
-    geom_bar(aes(x = date, y = new_pos), fill = "#0c7650", stat = "identity") +
-    geom_line(aes(x = date, y = hospitalized_currently), size = 1, color = "#1b61da") +
+    geom_bar(aes(x = date, y = new_pos), fill = "#53de8e", stat = "identity") +
+    geom_line(aes(x = date, y = hospitalized_mean), color = "#1b61da") +
     labs(
       x = "",
       y = "",
-      title = 'Patients in Arizona Currently <b style="color:#1b61da">Hospitalized</b> for COVID (TX doesn\'t report vent usage)',
-      subtitle = '<b style="color:#0c7650">Daily New Positive Cases</b>',
+      title = 'Patients in Arizona Currently <b style="color:#1b61da">Hospitalized (7-dma)</b> or on <b style="color:#e8174a">Ventilators</b> for COVID',
+      subtitle = '<b style="color:#53de8e">Daily New Positive Cases</b>',
       caption = "Data from COVID Tracking project\nhttps://covidtracking.com/\nVisual: Jim Felps"
         )   +
   theme_minimal() +
