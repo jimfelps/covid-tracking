@@ -11,6 +11,36 @@ knitr::opts_chunk$set(echo = FALSE)
 
 # Select States with Problematic Trends \n(based on media coverage)
 
+```{r fig.height=8, fig.width=12}
+
+# messing around with ventilator and hospitalizations...might adjust
+
+#state_data %>%
+#  filter(date > "2020-03-01") %>%
+#  mutate(hospitalized_mean = rolling_mean(hospitalized_currently)) %>% 
+#  ggplot() +
+#    geom_bar(aes(x = date, y = new_pos), fill = "#53de8e", stat = "identity") +
+#    geom_line(aes(x = date, y = on_ventilator_currently), size = 1, color = "#e8174a") +
+#    geom_line(aes(x = date, y = hospitalized_mean), color = "#1b61da") +
+#    geom_line(aes(x = date, y = death_7dma), color = "#010101") +
+#    labs(
+#      x = "",
+#      y = "",
+#      title = 'Patients in the State of Missouri Currently <b style="color:#1b61da">Hospitalized (7-dma)</b> or on <b style="color:#e8174a">Ventilators</b> for COVID',
+#      subtitle = '<b style="color:#53de8e">Daily New Positive Cases</b>',
+#      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/\nVisual: Jim Felps"
+#        )   +
+#  theme_minimal() +
+#  theme(
+#    plot.title = element_markdown(),
+#    plot.subtitle = element_markdown()
+#  ) +
+#  guides(color = FALSE)
+#
+#ggsave("images/mo_hos_vent.png")
+```
+
+
 ##California Hospital and ICU Usage
 
 ```{r fig.height=8, fig.width=12}
