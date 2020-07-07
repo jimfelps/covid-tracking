@@ -19,3 +19,6 @@ Sys.setenv("plotly_username"="Calvinschoice")
 Sys.setenv("plotly_api_key"="nlzCIoVJl6H4uWAeCiL9")
 
 theme_set(theme_minimal())
+
+rolling_sum <- rollify(sum, window = 14)
+rolling_mean <- rollify(mean, window = 7)

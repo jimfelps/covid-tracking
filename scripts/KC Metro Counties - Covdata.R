@@ -2,9 +2,6 @@
 metro_counties_mo <- c("Platte", "Clay", "Jackson", "Cass", "Kansas City")
 metro_counties_ks <- c("Wyandotte", "Johnson")
 
-rolling_sum <- rollify(sum, window = 14)
-rolling_mean <- rollify(mean, window = 7)
-
 get_nyt_data <- function(url = "https://github.com/nytimes/covid-19-data/raw/master/",
                         fname = "us-counties",
                         date = lubridate::today(),

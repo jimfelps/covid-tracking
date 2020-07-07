@@ -62,6 +62,7 @@ state_data %>%
     geom_bar(aes(x = date, y = new_pos), fill = "#53de8e", stat = "identity") +
     geom_line(aes(x = date, y = on_ventilator_currently), size = 1, color = "#e8174a") +
     geom_line(aes(x = date, y = hospitalized_mean), color = "#1b61da") +
+    geom_line(aes(x = date, y = death_7dma), color = "#010101") +
     labs(
       x = "",
       y = "",
@@ -78,23 +79,25 @@ state_data %>%
 
 ggsave("images/mo_hos_vent.png")
 
+
 ```
 
-```{r fig.height=8, fig.width=12}
+```{r}
 
 # messing around with ventilator and hospitalizations...might adjust
 
 state_data %>%
-  filter(state == "CA",
+  filter(state == "MO",
          date > "2020-03-01") %>%
+  mutate(hospitalized_mean = rolling_mean(hospitalized_currently)) %>% 
   ggplot() +
     geom_bar(aes(x = date, y = new_pos), fill = "#53de8e", stat = "identity") +
-    geom_line(aes(x = date, y = in_icu_currently), size = 1, color = "#e8174a") +
-    geom_line(aes(x = date, y = hospitalized_currently), size = 1, color = "#1b61da") +
+    geom_line(aes(x = date, y = on_ventilator_currently), size = 1, color = "#e8174a") +
+    geom_line(aes(x = date, y = hospitalized_mean), color = "#1b61da") +
     labs(
       x = "",
       y = "",
-      title = 'Patients in the State of California Currently <b style="color:#1b61da">Hospitalized</b> or in <b style="color:#e8174a">ICU</b> for COVID',
+      title = 'Patients in the State of Missouri Currently <br><b style="color:#1b61da">Hospitalized (7-dma)</b> or on <b style="color:#e8174a">Ventilators</b> for COVID',
       subtitle = '<b style="color:#53de8e">Daily New Positive Cases</b>',
       caption = "Data from COVID Tracking project\nhttps://covidtracking.com/\nVisual: Jim Felps"
         )   +
@@ -103,34 +106,11 @@ state_data %>%
     plot.title = element_markdown(),
     plot.subtitle = element_markdown()
   ) +
-  guides(color = FALSE) 
+  guides(color = FALSE)
 
-ggsave("images/ca_hos_icu.png")
+ggsave("images/mo_hos_vent_preview.png", width = 5.14, height = 3.75, dpi = "screen")
 
 ```
-
-
-```{r fig.height=8, fig.width=12}
-state_data %>%
-  filter(state == "MO",
-         date >= "2020-06-01") %>%
-  ggplot(aes(date, pos_rate_7dma)) +
-    geom_line(stat = "identity", , col = "darkred", size = 1) +
-    labs(
-      x = "",
-      y = "",
-      title = "Missouri Positivity Rate since June 1, 7 Day Moving Average",
-      subtitle = "",
-      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/"
-        )  +
-  gghighlight(
-    date >= floor_date(Sys.Date(), "weeks"),
-    unhighlighted_colour = alpha("steelblue", 0.4)
-  )
-
-ggsave("images/missouri_june.png")
-```
-
 
 ## Kansas
 
@@ -180,7 +160,7 @@ ggsave("images/metro_grouped.png")
 # Ballpark Odds of Meeting Someone Infected in the Metro
 # Metro Area New Positive Cases
 
-```{r}
+```{r fig.height=8, fig.width=12}
 metro_kc_grouped %>% 
   ggplot() +
   geom_line(aes(date, infect_pop), color = "#d61616") +
@@ -189,7 +169,7 @@ metro_kc_grouped %>%
     x = "",
     y = "",
     title = "Percent of Metro Area Population Potentially Contagious Each Day",
-    subtitle = 'Based on <b style="color:#d61616">Confirmed Positives</b> and <b style="color:#d616b9">Projected Positives</b>. Projected positives based on WaPost quote indicating that the true number of cases is likely ten times what we\'ve confirmed.',
+    subtitle = 'Based on <b style="color:#d61616">Confirmed Positives</b> and <b style="color:#d616b9">Projected Positives</b>. <br>Projected positives based on WaPost quote indicating that the true number of cases is likely ten times what we\'ve confirmed.',
     caption = "Data from NYT Covid repository \nhttps://github.com/nytimes/covid-19-data\nVisual: Jim Felps"
   ) +
   guides(color = FALSE) +
@@ -374,348 +354,5 @@ clay_summary %>%
 ggsave("images/clay_google.png")
 
 
-```
-
-# Select States with Problematic Trends \n(based on media coverage)
-
-## Arizona
-
-```{r fig.height=8, fig.width=12}
-state_data %>%
-  filter(state == "AZ",
-         date > "2020-03-26") %>%
-  ggplot(aes(date, pos_rate_7dma)) +
-    geom_line(stat = "identity")  +
-    labs(
-      x = "",
-      y = "",
-      title = "COVID Testing Positivity, 7 Day Moving Average",
-      subtitle = "",
-      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/\nVisual: Jim Felps"
-        )
-
-ggsave("images/az.png")
-
-```
-
-## AZ Hospital and Vent Graph
-```{r}
-
-state_data %>%
-  filter(state == "AZ",
-         date > "2020-03-01") %>%
-  mutate(hospitalized_mean = rolling_mean(hospitalized_currently)) %>% 
-  ggplot() +
-    geom_bar(aes(x = date, y = new_pos), fill = "#53de8e", stat = "identity") +
-    geom_line(aes(x = date, y = hospitalized_mean), color = "#1b61da") +
-    labs(
-      x = "",
-      y = "",
-      title = 'Patients in Arizona Currently <b style="color:#1b61da">Hospitalized (7-dma)</b> or on <b style="color:#e8174a">Ventilators</b> for COVID',
-      subtitle = '<b style="color:#53de8e">Daily New Positive Cases</b>',
-      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/\nVisual: Jim Felps"
-        )   +
-  theme_minimal() +
-  theme(
-    plot.title = element_markdown(),
-    plot.subtitle = element_markdown()
-  ) +
-  guides(color = FALSE)
-
-ggsave("images/az_hos_vent.png", width = 16, height = 9, dpi = "retina")
-```
-
-## TX Hospital and Vent Graph
-```{r}
-
-state_data %>%
-  filter(state == "TX",
-         date > "2020-03-01") %>%
-  mutate(hospitalized_mean = rolling_mean(hospitalized_currently)) %>% 
-  ggplot() +
-    geom_bar(aes(x = date, y = new_pos), fill = "#53de8e", stat = "identity") +
-    geom_line(aes(x = date, y = hospitalized_mean), color = "#1b61da") +
-    labs(
-      x = "",
-      y = "",
-      title = 'Patients in Arizona Currently <b style="color:#1b61da">Hospitalized (7-dma)</b> or on <b style="color:#e8174a">Ventilators</b> for COVID',
-      subtitle = '<b style="color:#53de8e">Daily New Positive Cases</b>',
-      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/\nVisual: Jim Felps"
-        )   +
-  theme_minimal() +
-  theme(
-    plot.title = element_markdown(),
-    plot.subtitle = element_markdown()
-  ) +
-  guides(color = FALSE)
-
-ggsave("images/tx_hos_vent.png", width = 16, height = 9, dpi = "retina")
-```
-
-## OK
-
-```{r fig.height=8, fig.width=12}
-state_data %>%
-  filter(state == "OK",
-         date > "2020-04-10") %>%
-  ggplot(aes(date, pos_rate_7dma)) +
-    geom_line(stat = "identity")  +
-    labs(
-      x = "",
-      y = "",
-      title = "COVID Testing Positivity, 7 Day Moving Average",
-      subtitle = "",
-      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/\nVisual: Jim Felps"
-        )
-
-ggsave("images/ok.png")
-```
-
-## Alabama
-
-```{r fig.height=8, fig.width=12}
-state_data %>%
-  filter(state == "AL",
-         date > "2020-03-21") %>%
-  ggplot(aes(date, pos_rate_7dma)) +
-    geom_line(stat = "identity")  +
-    labs(
-      x = "",
-      y = "",
-      title = "COVID Testing Positivity, 7 Day Moving Average",
-      subtitle = "",
-      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/\nVisual: Jim Felps"
-        )
-
-ggsave("images/al.png")
-```
-
-## Florida
-
-```{r fig.height=8, fig.width=12}
-state_data %>%
-  filter(state == "FL",
-         date > "2020-03-21") %>%
-  ggplot(aes(date, pos_rate_7dma)) +
-    geom_line(stat = "identity")  +
-    labs(
-      x = "",
-      y = "",
-      title = "COVID Testing Positivity, 7 Day Moving Average",
-      subtitle = "",
-      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/\nVisual: Jim Felps"
-        )
-
-ggsave("images/fl.png")
-```
-
-## Arkansas
-
-```{r fig.height=8, fig.width=12}
-state_data %>%
-  filter(state == "AR",
-         date > "2020-04-01") %>%
-  ggplot(aes(date, pos_rate_7dma)) +
-    geom_line(stat = "identity")  +
-    labs(
-      x = "",
-      y = "",
-      title = "COVID Testing Positivity, 7 Day Moving Average",
-      subtitle = "",
-      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/\nVisual: Jim Felps"
-        )
-
-ggsave("images/ar.png")
-```
-
-## California
-
-```{r fig.height=8, fig.width=12}
-state_data %>%
-  filter(state == "CA",
-         date > "2020-04-15") %>%
-  ggplot(aes(date, pos_rate_7dma)) +
-    geom_line(stat = "identity")  +
-    labs(
-      x = "",
-      y = "",
-      title = "COVID Testing Positivity, 7 Day Moving Average",
-      subtitle = "",
-      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/\nVisual: Jim Felps"
-        )
-
-ggsave("images/ca.png")
-```
-
-## Deleware
-
-```{r fig.height=8, fig.width=12}
-state_data %>%
-  filter(state == "DE",
-         date > "2020-04-01") %>%
-  ggplot(aes(date, pos_rate_7dma)) +
-    geom_line(stat = "identity")  +
-    labs(
-      x = "",
-      y = "",
-      title = "COVID Testing Positivity, 7 Day Moving Average",
-      subtitle = "",
-      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/\nVisual: Jim Felps"
-        )
-
-ggsave("images/de.png")
-```
-
-## Georgia
-
-```{r fig.height=8, fig.width=12}
-state_data %>%
-  filter(state == "GA",
-         date > "2020-03-01") %>%
-  ggplot(aes(date, pos_rate_7dma)) +
-    geom_line(stat = "identity")  +
-    labs(
-      x = "",
-      y = "",
-      title = "COVID Testing Positivity, 7 Day Moving Average",
-      subtitle = "",
-      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/\nVisual: Jim Felps"
-        )
-
-ggsave("images/ga.png")
-```
-
-## Oregan
-
-```{r fig.height=8, fig.width=12}
-state_data %>%
-  filter(state == "OR",
-         date > "2020-03-20") %>%
-  ggplot(aes(date, pos_rate_7dma)) +
-    geom_line(stat = "identity")  +
-    labs(
-      x = "",
-      y = "",
-      title = "COVID Testing Positivity, 7 Day Moving Average",
-      subtitle = "",
-      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/\nVisual: Jim Felps"
-        )
-
-ggsave("images/or.png")
-```
-
-## North Carolina
-
-```{r fig.height=8, fig.width=12}
-state_data %>%
-  filter(state == "NC",
-         date > "2020-03-15") %>%
-  ggplot(aes(date, pos_rate_7dma)) +
-    geom_line(stat = "identity")  +
-    labs(
-      x = "",
-      y = "",
-      title = "COVID Testing Positivity, 7 Day Moving Average",
-      subtitle = "",
-      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/\nVisual: Jim Felps"
-        )
-
-ggsave("images/nc.png")
-```
-
-## Nevada
-
-```{r fig.height=8, fig.width=12}
-state_data %>%
-  filter(state == "NV",
-         date > "2020-03-20") %>%
-  ggplot(aes(date, pos_rate_7dma)) +
-    geom_line(stat = "identity")  +
-    labs(
-      x = "",
-      y = "",
-      title = "COVID Testing Positivity, 7 Day Moving Average",
-      subtitle = "",
-      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/\nVisual: Jim Felps"
-        )
-
-ggsave("images/nv.png")
-```
-
-## Texas
-
-```{r fig.height=8, fig.width=12}
-state_data %>%
-  filter(state == "TX",
-         date > "2020-03-20") %>%
-  ggplot(aes(date, pos_rate_7dma)) +
-    geom_line(stat = "identity")  +
-    labs(
-      x = "",
-      y = "",
-      title = "COVID Testing Positivity, 7 Day Moving Average",
-      subtitle = "",
-      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/\nVisual: Jim Felps"
-        )
-
-ggsave("images/tx.png")
-```
-
-## Tennessee
-
-```{r fig.height=8, fig.width=12}
-state_data %>%
-  filter(state == "TN",
-         date > "2020-03-20") %>%
-  ggplot(aes(date, pos_rate_7dma)) +
-    geom_line(stat = "identity")  +
-    labs(
-      x = "",
-      y = "",
-      title = "COVID Testing Positivity, 7 Day Moving Average",
-      subtitle = "",
-      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/\nVisual: Jim Felps"
-        )
-
-ggsave("images/tn.png")
-```
-
-## Vermont
-
-```{r fig.height=8, fig.width=12}
-state_data %>%
-  filter(state == "VT",
-         date > "2020-04-15") %>%
-  ggplot(aes(date, pos_rate_7dma)) +
-    geom_line(stat = "identity")  +
-    labs(
-      x = "",
-      y = "",
-      title = "COVID Testing Positivity, 7 Day Moving Average",
-      subtitle = "",
-      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/\nVisual: Jim Felps"
-        )
-
-ggsave("images/vt.png")
-```
-
-## New York
-
-
-```{r fig.height=8, fig.width=12}
-state_data %>%
-  filter(state == "NY",
-         date > "2020-03-12") %>%
-  ggplot(aes(date, pos_rate_7dma)) +
-    geom_line(stat = "identity")  +
-    labs(
-      x = "",
-      y = "",
-      title = "COVID Testing Positivity, 7 Day Moving Average",
-      subtitle = "",
-      caption = "Data from COVID Tracking project\nhttps://covidtracking.com/\nVisual: Jim Felps"
-        )
-
-ggsave("images/ny.png")
 ```
 

@@ -71,6 +71,7 @@ state_data <- cov_us_raw %>%
   mutate(
    new_tests = total_test_results - lead(total_test_results),
    new_pos = positive - lead(positive),
+   new_deaths = death - lead(death),
    death_rate = round(death / total_test_results, 4)
   ) %>% 
   tq_mutate(
@@ -92,7 +93,8 @@ state_data <- cov_us_raw %>%
     col_rename = "new_pos_7dma"
   ) %>%
   mutate(
-    pos_rate_7dma = round(new_pos_7dma/new_test_7dma, 4)
+    pos_rate_7dma = round(new_pos_7dma/new_test_7dma, 4),
+    death_7dma = rolling_mean(new_deaths)
   ) %>%
   ungroup()
 
