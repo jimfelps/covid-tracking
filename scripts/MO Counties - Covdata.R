@@ -1,8 +1,7 @@
 select_counties <- c("St. Louis", "Kansas City", "McDonald")
 
 mo_counties %>% 
-  filter(county != "Ozark",
-         county != "Wayne",
+  filter(county != "Hickory",
          county != "Joplin") %>% 
   group_by(county) %>% 
   arrange(desc(date)) %>% 
