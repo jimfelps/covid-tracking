@@ -78,8 +78,6 @@ state_data %>%
   guides(color = FALSE)
 
 ggsave("images/mo_hos_vent.png")
-
-
 ```
 
 ```{r}
