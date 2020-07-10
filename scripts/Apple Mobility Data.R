@@ -44,8 +44,6 @@ apple_mobility <- get_apple_data() %>%
     date = as_date(date))
 
 
-apple_counties_mo <- c("Platte County", "Clay County", "Jackson County", "Cass County", "Kansas City")
-apple_counties_ks <- c("Wyandotte County", "Johnson County")
 
 
 mo_apple <- apple_mobility %>% 

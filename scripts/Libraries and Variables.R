@@ -22,3 +22,6 @@ theme_set(theme_minimal())
 
 rolling_sum <- rollify(sum, window = 14)
 rolling_mean <- rollify(mean, window = 7)
+
+apple_counties_mo <- c("Platte County", "Clay County", "Jackson County", "Cass County", "Kansas City")
+apple_counties_ks <- c("Wyandotte County", "Johnson County")
