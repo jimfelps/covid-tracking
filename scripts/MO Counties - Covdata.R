@@ -1,4 +1,4 @@
-select_counties <- c("St. Louis", "Kansas City", "McDonald")
+select_counties <- c("St. Louis", "Kansas City", "St. Charles", "St. Louis city", "Jackson", "Jasper", "Boone")
 
 mo_counties %>% 
   filter(county != "Hickory",
@@ -28,3 +28,4 @@ mo_counties %>%
   ungroup() %>% 
   mutate(county = factor(county)) -> mo_counties_7ma
 
+# mo_counties_7ma %>% filter(county != "St. Louis", county != "Kansas City") %>% arrange(desc(new_pos_7dma)) %>% view()
