@@ -1,4 +1,4 @@
-Updated Last: 2020-08-17
+Updated Last: 2020-08-18
 
 # Missouri
 
