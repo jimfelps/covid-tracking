@@ -40,6 +40,8 @@ state_data %>%
       subtitle = '<b style="color:#811609">This Week\'s Data</b>',
       caption = "Data from COVID Tracking project\nhttps://covidtracking.com/\nVisual: Jim Felps"
         )   +
+  geom_vline(xintercept = as.numeric(ymd("2020-05-04")), linetype = "dashed") +
+  geom_vline(xintercept = as.numeric(ymd("2020-05-18")), linetype = "dashed") +
   gghighlight(
     date >= floor_date(Sys.Date(), "weeks"),
     unhighlighted_colour = alpha("steelblue", 0.4)
